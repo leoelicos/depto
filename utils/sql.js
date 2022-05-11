@@ -94,6 +94,10 @@ class SQL {
 
 	/* 
    Delete
-   */
+		  */
+
+	deleteDepartment(department_id) {
+		return `DELETE FROM department WHERE id = ${department_id}`;
+	}
 }
 module.exports = SQL;
