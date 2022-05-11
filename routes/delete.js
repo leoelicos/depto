@@ -3,15 +3,15 @@ delete.js
 
 This script contains necessary code to handle routes to /api/delete:
 
-   It handles DELETE requests to /api/delete/department/
-   It handles DELETE requests to /api/delete/role/
-	It handles DELETE requests to /api/delete/employee/
+   It handles DELETE requests to /api/delete/department/:id
+   It handles DELETE requests to /api/delete/role/:id
+	It handles DELETE requests to /api/delete/employee/:id
 
 Copyright Leo Wong 2022
 */
 
 // HTTP response status codes: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
-const CREATED = 201;
+const OK = 200;
 const BADREQUEST = 400;
 const NOTFOUND = 404;
 
