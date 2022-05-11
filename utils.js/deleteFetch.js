@@ -41,3 +41,19 @@ const deleteRole = (role_id) =>
 		.catch((error) => {
 			console.error('Error in DELETE request:', error);
 		});
+
+const deleteEmployee = (employee_id) =>
+	fetch(`/api/employee/${employee_id}`, {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	})
+		.then((res) => res.json())
+		.then((data) => {
+			console.log('Successful DELETE request:', data);
+			return data;
+		})
+		.catch((error) => {
+			console.error('Error in DELETE request:', error);
+		});
