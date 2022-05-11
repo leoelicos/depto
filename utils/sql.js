@@ -33,6 +33,11 @@ class SQL {
    Read
    */
 
+	viewAllDepartments() {
+		return `SELECT id, name AS department 
+      FROM department;`;
+	}
+
 	/*
    Update
    */
