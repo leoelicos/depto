@@ -13,3 +13,8 @@ Copyright Leo Wong 2022
 const CREATED = 201;
 const BADREQUEST = 400;
 const NOTFOUND = 404;
+
+// modularize route logic. This utility is exported at the end of this file.
+const update = require('express').Router();
+
+module.exports = update;
