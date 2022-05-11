@@ -10,6 +10,12 @@ This script contains necessary code to handle routes to /api/add:
 Copyright Leo Wong 2022
 */
 
+// HTTP response status codes: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+const OK = 200;
+const CREATED = 201;
+const NOTFOUND = 404;
+const BADREQUEST = 400;
+
 // modularize route logic. This utility is exported at the end of this file.
 const add = require('express').Router();
 
