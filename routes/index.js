@@ -16,7 +16,7 @@ const addRouter = require('./add');
 const viewRouter = require('./view');
 
 // import modular router for /update
-// const updateRouter = require('./update');
+const updateRouter = require('./update');
 
 // import modular router for /delete
 // const deleteRouter = require('./delete');
@@ -31,7 +31,7 @@ app.use('/add', addRouter);
 app.use('/view', viewRouter);
 
 // implement mounted middleware for handling /update
-// app.use('/update', updateRouter);
+app.use('/update', updateRouter);
 
 // implement mounted middleware for handling /delete
 // app.use('/delete', deleteRouter);
