@@ -19,3 +19,10 @@ const getRoles = () =>
 	})
 		.then((res) => res.json())
 		.then((data) => data);
+
+const getEmployees = () =>
+	fetch('/api/view/employees', {
+		method: 'GET',
+	})
+		.then((res) => res.json())
+		.then((data) => data);
