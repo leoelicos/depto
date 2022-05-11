@@ -14,6 +14,11 @@ class SQL {
    Create
    */
 
+	addDepartment(department_name) {
+		return `INSERT INTO department (name)
+      VALUES ("${department_name}");`;
+	}
+
 	/*
    Read
    */
