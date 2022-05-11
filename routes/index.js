@@ -11,3 +11,6 @@ const express = require('express');
 
 // import modular router for /add
 const addRouter = require('./add');
+
+// import modular router for /view
+const viewRouter = require('./view');
