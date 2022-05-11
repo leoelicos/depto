@@ -80,13 +80,13 @@ class SQL {
 			WHERE e.manager_id = ${employee_id};`;
 	}
 
-	updateEmployeeRole(employee_id, role_id) {
-		return `UPDATE employee SET role_id = ${role_id} WHERE employee_id = ${employee_id}`;
-	}
-
 	/*
    Update
    */
+
+	updateEmployeeRole(employee_id, role_id) {
+		return `UPDATE employee SET role_id = ${role_id} WHERE employee_id = ${employee_id}`;
+	}
 
 	/* 
    Delete
