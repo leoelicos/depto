@@ -24,6 +24,11 @@ class SQL {
       VALUES ("${role_title}", ${role_salary}, ${department_id});`;
 	}
 
+	addEmployee(first_name, last_name, role_id, manager_id) {
+		return `INSERT INTO employee (first_name, last_name, role_id, manager_id)
+      VALUES ("${first_name}", "${last_name}", ${role_id}, ${manager_id});`;
+	}
+
 	/*
    Read
    */
