@@ -13,13 +13,13 @@ const express = require('express');
 const addRouter = require('./add');
 
 // import modular router for /view
-const viewRouter = require('./view');
+// const viewRouter = require('./view');
 
 // import modular router for /update
-const updateRouter = require('./update');
+// const updateRouter = require('./update');
 
 // import modular router for /delete
-const deleteRouter = require('./delete');
+// const deleteRouter = require('./delete');
 
 // assign variable for readability
 const app = express();
@@ -28,12 +28,12 @@ const app = express();
 app.use('/add', addRouter);
 
 // implement mounted middleware for handling /view
-app.use('/view', viewRouter);
+// app.use('/view', viewRouter);
 
 // implement mounted middleware for handling /update
-app.use('/update', updateRouter);
+// app.use('/update', updateRouter);
 
 // implement mounted middleware for handling /delete
-app.use('/delete', deleteRouter);
+// app.use('/delete', deleteRouter);
 
 module.exports = app;

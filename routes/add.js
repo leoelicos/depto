@@ -1,0 +1,139 @@
+/* 
+add.js
+
+This script contains necessary code to handle routes to /api/add:
+
+	It handles POST 	requests to /api/add/department/
+	It handles POST 	requests to /api/add/role/
+	It handles POST 	requests to /api/add/employee/
+
+Copyright Leo Wong 2022
+*/
+
+// HTTP response status codes: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+const CREATED = 201;
+const BADREQUEST = 400;
+
+// modularize route logic. This utility is exported at the end of this file.
+const add = require('express').Router();
+
+// import SQL class
+const SQL = require('../utils/sql');
+
+// mysql2 is an npm library package which allows javascript access to an SQL database
+const mysql = require('mysql2');
+
+// Connect to database
+const db = mysql.createConnection(
+	{
+		host: 'localhost',
+		user: 'root',
+		password: 'xxxx',
+		database: 'cms',
+	},
+	console.log(`Connected to the cms database.`)
+);
+
+// implement route handler for POST request to /api/add/department
+add.post('/department', (req, res) => {
+	//
+	// check if request has a name property inside the body
+	if (!req.body || !req.body.name) {
+		// respond to the POST request with status(BADREQUEST)
+		res.status(BADREQUEST).json({
+			error: 'body needs to have name property',
+			your_body: req.body,
+		});
+	} else {
+		// destructure name from the body
+		const { name } = req.body;
+		const sql = new SQL().addDepartment();
+		const params = name;
+		db.query(sql, params, (err, result) => {
+			if (err) {
+				// respond to the POST request with status(BADREQUEST)
+				res.status(BADREQUEST).json({
+					sql_error: err.message,
+					your_sql: sql,
+				});
+			} else {
+				// respond to the POST request with status(CREATED)
+				res.status(CREATED).json({
+					message: `Successfully added department '${name}'`,
+					changes: result.affectedRows,
+					result: result,
+				});
+			}
+		});
+	}
+});
+
+// implement route handler for POST request to /api/add/role
+add.post('/role', (req, res) => {
+	//
+	// check if request has a title, salary and department_id properties inside the body
+	if (!req.body || !req.body.title || !req.body.salary || !req.body.department_id) {
+		// respond to the POST request with status(BADREQUEST)
+		res.status(BADREQUEST).json({
+			error: 'body needs to have title, salary and department_id properties',
+			your_body: req.body,
+		});
+	} else {
+		// destructure title, salary and department_id from the body
+		const { title, salary, department_id } = req.body;
+		const sql = new SQL().addRole();
+		const params = [title, salary, department_id];
+		db.query(sql, params, (err, result) => {
+			if (err) {
+				// respond to the POST request with status(BADREQUEST)
+				res.status(BADREQUEST).json({
+					sql_error: err.message,
+					your_sql: sql,
+				});
+			} else {
+				// respond to the POST request with status(CREATED)
+				res.status(CREATED).json({
+					message: `Successfully added role '${title}'`,
+					changes: result.affectedRows,
+					result: result,
+				});
+			}
+		});
+	}
+});
+
+// implement route handler for POST request to /api/add/employee
+add.post('/employee', (req, res) => {
+	//
+	// check if request has a first_name, last_name, role_id, and manager_id properties inside the body
+	if (!req.body || !req.body.first_name || !req.body.last_name || !req.body.role_id || !req.body.manager_id) {
+		// respond to the POST request with status(BADREQUEST)
+		res.status(BADREQUEST).json({
+			error: 'body needs to have first_name, last_name, role_id, and manager_id properties',
+			your_body: req.body,
+		});
+	} else {
+		// destructure first_name, last_name, role_id, and manager_id from the body
+		const { first_name, last_name, role_id, manager_id } = req.body;
+		const sql = new SQL().addEmployee();
+		const params = [first_name, last_name, role_id, manager_id];
+		db.query(sql, params, (err, result) => {
+			if (err) {
+				// respond to the POST request with status(BADREQUEST)
+				res.status(BADREQUEST).json({
+					sql_error: err.message,
+					your_sql: sql,
+				});
+			} else {
+				// respond to the POST request with status(CREATED)
+				res.status(CREATED).json({
+					message: `Successfully added employee '${first_name} ${last_name}'`,
+					changes: result.affectedRows,
+					result: result,
+				});
+			}
+		});
+	}
+});
+
+module.exports = add;
