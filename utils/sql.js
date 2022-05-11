@@ -56,6 +56,18 @@ class SQL {
       on e.manager_id = e2.id;`;
 	}
 
+	viewAllEmployeesByDepartment(department_id) {
+		return `SELECT e.id, e.first_name, e.last_name, title 
+			FROM employee AS e 
+			INNER JOIN role AS r 
+			ON e.role_id = r.id 
+			INNER JOIN department AS d
+			ON r.department_id = d.id
+			LEFT JOIN employee AS e2
+			on e.manager_id = e2.id
+			WHERE d.id = ${department_id};`;
+	}
+
 	/*
    Update
    */
