@@ -23,3 +23,6 @@ const deleteRouter = require('./delete');
 
 // assign variable for readability
 const app = express();
+
+// implement mounted middleware for handling /add
+app.use('/add', addRouter);
