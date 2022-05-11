@@ -32,6 +32,9 @@ function init() {
 
 	// implement middleware for handling /api routes
 	app.use('/api', api);
+
+	// implement server
+	app.listen(PORT, () => console.log(`App listening at http://localhost:${PORT} 🚀`));
 }
 
 // call function to start server
