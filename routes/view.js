@@ -131,4 +131,34 @@ view.get('/employeesByDepartment/:department_id', (req, res) => {
 	});
 });
 
+// implement route handler for GET request to /api/view/employeesByManager/:manager_id
+view.get('/employeesByManager/:manager_id', (req, res) => {
+	const sql = new SQL().viewAllEmployeesByManager();
+	const { manager_id } = req.params;
+	const params = manager_id;
+	db.query(sql, params, (err, result) => {
+		if (err) {
+			// respond to the GET request with status(BADREQUEST)
+			res.status(BADREQUEST).json({
+				sql_error: err.message,
+				your_sql: sql,
+			});
+		} else {
+			if (result.length === 0) {
+				// respond to the GET request with status(NOTFOUND)
+				res.status(NOTFOUND).json({
+					message: `Couldn't find any employees with manager ${manager_id}`,
+					result: result,
+				});
+			} else {
+				// respond to the GET request with status(CREATED)
+				res.status(CREATED).json({
+					message: `Successfully retrieved employees of manager ${manager_id}`,
+					result: result,
+				});
+			}
+		}
+	});
+});
+
 module.exports = view;
