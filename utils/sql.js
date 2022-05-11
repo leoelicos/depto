@@ -80,6 +80,17 @@ class SQL {
 			WHERE e.manager_id = ${employee_id};`;
 	}
 
+	viewTotalUtilizedBudget(department_id) {
+		return `SELECT d.name, SUM(salary) AS 'total utilized budget'            
+		FROM employee AS e
+		INNER JOIN role AS r
+		ON e.role_id = r.id
+		INNER JOIN department AS d
+		ON r.department_id = d.id
+		WHERE r.department_id = ${department_id};
+		`;
+	}
+
 	/*
    Update
    */
