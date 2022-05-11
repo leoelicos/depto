@@ -47,12 +47,20 @@ update.put('/employeeRole/', (req, res) => {
 				your_sql: sql,
 			});
 		} else {
-			// respond to the GET request with status(CREATED)
-			res.status(CREATED).json({
-				message: `Successfully changed employee ${employee_id} role to ${role_id}`,
-				changes: result.changedRows,
-				result: result,
-			});
+			if (result.affectedRows === 0) {
+				// respond to the GET request with status(NOTFOUND)
+				res.status(NOTFOUND).json({
+					message: `Couldn't find employee ${employee_id} or role ${role_id}`,
+					result: result,
+				});
+			} else {
+				// respond to the GET request with status(CREATED)
+				res.status(CREATED).json({
+					message: `Successfully changed employee ${employee_id} role to ${role_id}`,
+					changes: result.changedRows,
+					result: result,
+				});
+			}
 		}
 	});
 });
@@ -70,11 +78,19 @@ update.put('/employeeManager/', (req, res) => {
 				your_sql: sql,
 			});
 		} else {
-			// respond to the GET request with status(CREATED)
-			res.status(CREATED).json({
-				message: `Successfully changed employee ${employee_id} manager to ${manager_id}`,
-				result: result,
-			});
+			if (result.affectedRows === 0) {
+				// respond to the GET request with status(NOTFOUND)
+				res.status(NOTFOUND).json({
+					message: `Couldn't find employee ${employee_id} or manager ${manager_id}`,
+					result: result,
+				});
+			} else {
+				// respond to the GET request with status(CREATED)
+				res.status(CREATED).json({
+					message: `Successfully changed employee ${employee_id} manager to ${manager_id}`,
+					result: result,
+				});
+			}
 		}
 	});
 });
