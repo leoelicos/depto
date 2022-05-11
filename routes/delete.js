@@ -35,4 +35,35 @@ const db = mysql.createConnection(
 	console.log(`Connected to the cms database.`)
 );
 
+// implement route handler for DELETE request to /api/delete/department
+del.delete('/department/:id', (req, res) => {
+	const sql = new SQL().deleteDepartment();
+	const id = req.params.id;
+	const params = id;
+	db.query(sql, params, (err, result) => {
+		if (err) {
+			// respond to the GET request with status(BADREQUEST)
+			res.status(BADREQUEST).json({
+				sql_error: err.message,
+				your_sql: sql,
+			});
+		} else {
+			if (result.affectedRows === 0) {
+				// respond to the GET request with status(NOTFOUND)
+				res.status(NOTFOUND).json({
+					message: `Couldn't find department ${id}`,
+					result: result,
+				});
+			} else {
+				// respond to the GET request with status(CREATED)
+				res.status(OK).json({
+					message: `Successfully deleted department ${id}`,
+					changes: result.changedRows,
+					result: result,
+				});
+			}
+		}
+	});
+});
+
 module.exports = del;
