@@ -99,5 +99,9 @@ class SQL {
 	deleteDepartment(department_id) {
 		return `DELETE FROM department WHERE id = ${department_id}`;
 	}
+
+	deleteRole(role_id) {
+		return `DELETE FROM role WHERE id = ${role_id}`;
+	}
 }
 module.exports = SQL;
