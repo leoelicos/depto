@@ -40,3 +40,10 @@ const getEmployeesByManager = (manager_id) =>
 	})
 		.then((res) => res.json())
 		.then((data) => data);
+
+const getTotalUtilizedBudget = (department_id) =>
+	fetch(`/api/view/totalUtilizedBudget/${department_id}`, {
+		method: 'GET',
+	})
+		.then((res) => res.json())
+		.then((data) => data);
