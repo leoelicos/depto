@@ -14,3 +14,6 @@ const addRouter = require('./add');
 
 // import modular router for /view
 const viewRouter = require('./view');
+
+// import modular router for /update
+const updateRouter = require('./update');
