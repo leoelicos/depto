@@ -29,3 +29,6 @@ app.use('/add', addRouter);
 
 // implement mounted middleware for handling /view
 app.use('/view', viewRouter);
+
+// implement mounted middleware for handling /update
+app.use('/update', updateRouter);
