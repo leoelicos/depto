@@ -68,4 +68,38 @@ add.post('/department', (req, res) => {
 	}
 });
 
+// implement route handler for POST request to /api/add/role
+add.post('/role', (req, res) => {
+	//
+	// check if request has a title, salary and department_id properties inside the body
+	if (!req.body || !req.body.title || !req.body.salary || !req.body.department_id) {
+		// respond to the POST request with status(BADREQUEST)
+		res.status(BADREQUEST).json({
+			error: 'body needs to have title, salary and department_id properties',
+			your_body: req.body,
+		});
+	} else {
+		// destructure title, salary and department_id from the body
+		const { title, salary, department_id } = req.body;
+		const sql = new SQL().addRole();
+		const params = [title, salary, department_id];
+		db.query(sql, params, (err, result) => {
+			if (err) {
+				// respond to the POST request with status(BADREQUEST)
+				res.status(BADREQUEST).json({
+					sql_error: err.message,
+					your_sql: sql,
+				});
+			} else {
+				// respond to the POST request with status(CREATED)
+				res.status(CREATED).json({
+					message: `Successfully added role '${title}'`,
+					changes: result.affectedRows,
+					result: result,
+				});
+			}
+		});
+	}
+});
+
 module.exports = add;
