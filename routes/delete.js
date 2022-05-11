@@ -66,4 +66,35 @@ del.delete('/department/:id', (req, res) => {
 	});
 });
 
+// implement route handler for DELETE request to /api/delete/role
+del.delete('/role/:id', (req, res) => {
+	const sql = new SQL().deleteRole();
+	const id = req.params.id;
+	const params = id;
+	db.query(sql, params, (err, result) => {
+		if (err) {
+			// respond to the GET request with status(BADREQUEST)
+			res.status(BADREQUEST).json({
+				sql_error: err.message,
+				your_sql: sql,
+			});
+		} else {
+			if (result.affectedRows === 0) {
+				// respond to the GET request with status(NOTFOUND)
+				res.status(NOTFOUND).json({
+					message: `Couldn't find role ${id}`,
+					result: result,
+				});
+			} else {
+				// respond to the GET request with status(CREATED)
+				res.status(OK).json({
+					message: `Successfully deleted role ${id}`,
+					changes: result.changedRows,
+					result: result,
+				});
+			}
+		}
+	});
+});
+
 module.exports = del;
