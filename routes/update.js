@@ -57,4 +57,26 @@ update.put('/employeeRole/', (req, res) => {
 	});
 });
 
+// implement route handler for PUT request to /api/update/employeeManager/
+update.put('/employeeManager/', (req, res) => {
+	const sql = new SQL().updateEmployeeManager();
+	const { manager_id, employee_id } = req.body;
+	const params = [manager_id, employee_id];
+	db.query(sql, params, (err, result) => {
+		if (err) {
+			// respond to the GET request with status(BADREQUEST)
+			res.status(BADREQUEST).json({
+				sql_error: err.message + 'hello',
+				your_sql: sql,
+			});
+		} else {
+			// respond to the GET request with status(CREATED)
+			res.status(CREATED).json({
+				message: `Successfully changed employee ${employee_id} manager to ${manager_id}`,
+				result: result,
+			});
+		}
+	});
+});
+
 module.exports = update;
