@@ -38,4 +38,25 @@ const db = mysql.createConnection(
 	console.log(`Connected to the cms database.`)
 );
 
+// implement route handler for GET request to /api/view/departments
+view.get('/departments', (req, res) => {
+	const sql = new SQL().viewAllDepartments();
+	const params = '';
+	db.query(sql, params, (err, result) => {
+		if (err) {
+			// respond to the GET request with status(BADREQUEST)
+			res.status(BADREQUEST).json({
+				sql_error: err.message,
+				your_sql: sql,
+			});
+		} else {
+			// respond to the GET request with status(CREATED)
+			res.status(CREATED).json({
+				message: `Successfully retrieved departments`,
+				result: result,
+			});
+		}
+	});
+});
+
 module.exports = view;
