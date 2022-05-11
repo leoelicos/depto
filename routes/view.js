@@ -21,4 +21,7 @@ const NOTFOUND = 404;
 // modularize route logic. This utility is exported at the end of this file.
 const view = require('express').Router();
 
+// import SQL class
+const SQL = require('../utils/sql');
+
 module.exports = view;
