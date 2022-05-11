@@ -14,9 +14,9 @@ class SQL {
    Create
    */
 
-	addDepartment(department_name) {
+	addDepartment() {
 		return `INSERT INTO department (name)
-      VALUES ("${department_name}");`;
+      VALUES ("?");`;
 	}
 
 	addRole(role_title, role_salary, department_id) {
