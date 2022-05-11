@@ -14,3 +14,6 @@ const mysql = require('mysql2');
 
 // process.env.PORT is a requirement for Heroku deployment, in case we need to later on: https://help.heroku.com/P1AVPANS/why-is-my-node-js-app-crashing-with-an-r10-error
 const PORT = process.env.PORT || 3001;
+
+// assign variable for readability
+const app = express();
