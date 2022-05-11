@@ -63,8 +63,6 @@ class SQL {
 			ON e.role_id = r.id 
 			INNER JOIN department AS d
 			ON r.department_id = d.id
-			LEFT JOIN employee AS e2
-			on e.manager_id = e2.id
 			WHERE d.id = ${department_id};`;
 	}
 
