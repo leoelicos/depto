@@ -34,4 +34,38 @@ const db = mysql.createConnection(
 	console.log(`Connected to the cms database.`)
 );
 
+// implement route handler for POST request to /api/add/department
+add.post('/department', (req, res) => {
+	//
+	// check if request has a name property inside the body
+	if (!req.body || !req.body.name) {
+		// respond to the POST request with status(BADREQUEST)
+		res.status(BADREQUEST).json({
+			error: 'body needs to have name property',
+			your_body: req.body,
+		});
+	} else {
+		// destructure name from the body
+		const { name } = req.body;
+		const sql = new SQL().addDepartment();
+		const params = name;
+		db.query(sql, params, (err, result) => {
+			if (err) {
+				// respond to the POST request with status(BADREQUEST)
+				res.status(BADREQUEST).json({
+					sql_error: err.message,
+					your_sql: sql,
+				});
+			} else {
+				// respond to the POST request with status(CREATED)
+				res.status(CREATED).json({
+					message: `Successfully added department '${name}'`,
+					changes: result.affectedRows,
+					result: result,
+				});
+			}
+		});
+	}
+});
+
 module.exports = add;
