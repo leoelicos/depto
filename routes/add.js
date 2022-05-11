@@ -102,4 +102,38 @@ add.post('/role', (req, res) => {
 	}
 });
 
+// implement route handler for POST request to /api/add/employee
+add.post('/employee', (req, res) => {
+	//
+	// check if request has a first_name, last_name, role_id, and manager_id properties inside the body
+	if (!req.body || !req.body.first_name || !req.body.last_name || !req.body.role_id || !req.body.manager_id) {
+		// respond to the POST request with status(BADREQUEST)
+		res.status(BADREQUEST).json({
+			error: 'body needs to have first_name, last_name, role_id, and manager_id properties',
+			your_body: req.body,
+		});
+	} else {
+		// destructure first_name, last_name, role_id, and manager_id from the body
+		const { first_name, last_name, role_id, manager_id } = req.body;
+		const sql = new SQL().addEmployee();
+		const params = [first_name, last_name, role_id, manager_id];
+		db.query(sql, params, (err, result) => {
+			if (err) {
+				// respond to the POST request with status(BADREQUEST)
+				res.status(BADREQUEST).json({
+					sql_error: err.message,
+					your_sql: sql,
+				});
+			} else {
+				// respond to the POST request with status(CREATED)
+				res.status(CREATED).json({
+					message: `Successfully added employee '${first_name} ${last_name}'`,
+					changes: result.affectedRows,
+					result: result,
+				});
+			}
+		});
+	}
+});
+
 module.exports = add;
