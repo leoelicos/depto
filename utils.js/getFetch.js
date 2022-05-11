@@ -12,3 +12,10 @@ const getDepartments = () =>
 	})
 		.then((res) => res.json())
 		.then((data) => data);
+
+const getRoles = () =>
+	fetch('/api/view/roles', {
+		method: 'GET',
+	})
+		.then((res) => res.json())
+		.then((data) => data);
