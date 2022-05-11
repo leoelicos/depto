@@ -26,6 +26,9 @@ function init() {
 
 	// implement middleware for parsing urlencoded form data
 	app.use(express.urlencoded({ extended: false }));
+
+	// implement middleware for handling /api routes
+	app.use('/api', api);
 }
 
 // call function to start server
