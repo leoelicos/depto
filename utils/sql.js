@@ -25,7 +25,7 @@ class SQL {
 	}
 
 	addEmployee() {
-		return `INSERT INTO mployee (first_name, last_name, role_id, manager_id)
+		return `INSERT INTO employee (first_name, last_name, role_id, manager_id)
       VALUES (?, ?, ?, ?);`;
 	}
 
@@ -56,17 +56,17 @@ class SQL {
       on e.manager_id = e2.id;`;
 	}
 
-	viewAllEmployeesByDepartment(department_id) {
+	viewAllEmployeesByDepartment() {
 		return `SELECT e.id, e.first_name, e.last_name, title 
 			FROM employee AS e 
 			INNER JOIN role AS r 
 			ON e.role_id = r.id 
 			INNER JOIN department AS d
 			ON r.department_id = d.id
-			WHERE d.id = ${department_id};`;
+			WHERE d.id = ?;`;
 	}
 
-	viewAllEmployeesByManager(employee_id) {
+	viewAllEmployeesByManager() {
 		return `SELECT e.id, e.first_name, e.last_name, title 
 			FROM employee AS e 
 			INNER JOIN role AS r 
@@ -75,17 +75,17 @@ class SQL {
 			ON r.department_id = d.id
 			LEFT JOIN employee AS e2
 			on e.manager_id = e2.id
-			WHERE e.manager_id = ${employee_id};`;
+			WHERE e.manager_id = ?;`;
 	}
 
-	viewTotalUtilizedBudget(department_id) {
+	viewTotalUtilizedBudget() {
 		return `SELECT d.name, SUM(salary) AS 'total utilized budget'            
 		FROM employee AS e
 		INNER JOIN role AS r
 		ON e.role_id = r.id
 		INNER JOIN department AS d
 		ON r.department_id = d.id
-		WHERE r.department_id = ${department_id};
+		WHERE r.department_id = ?;
 		`;
 	}
 
