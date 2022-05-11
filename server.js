@@ -17,3 +17,6 @@ const PORT = process.env.PORT || 3001;
 
 // assign variable for readability
 const app = express();
+
+// function to start server
+function init() {}
