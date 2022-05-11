@@ -38,6 +38,13 @@ class SQL {
       FROM department;`;
 	}
 
+	viewAllRoles() {
+		return `SELECT r.id, r.title, d.name AS department, r.salary
+			FROM role AS r
+			JOIN department AS d
+			ON r.department_id = d.id;`;
+	}
+
 	/*
    Update
    */
