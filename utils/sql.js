@@ -9,5 +9,21 @@
 class SQL {
 	//
 	constructor() {}
+
+	/* 
+   Create
+   */
+
+	/*
+   Read
+   */
+
+	/*
+   Update
+   */
+
+	/* 
+   Delete
+   */
 }
 module.exports = SQL;
