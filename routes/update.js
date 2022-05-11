@@ -43,7 +43,7 @@ update.put('/employeeRole/', (req, res) => {
 		if (err) {
 			// respond to the GET request with status(BADREQUEST)
 			res.status(BADREQUEST).json({
-				sql_error: err.message + 'hello',
+				sql_error: err.message,
 				your_sql: sql,
 			});
 		} else {
@@ -74,7 +74,7 @@ update.put('/employeeManager/', (req, res) => {
 		if (err) {
 			// respond to the GET request with status(BADREQUEST)
 			res.status(BADREQUEST).json({
-				sql_error: err.message + 'hello',
+				sql_error: err.message,
 				your_sql: sql,
 			});
 		} else {

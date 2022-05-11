@@ -105,16 +105,16 @@ class SQL {
    Delete
 		  */
 
-	deleteDepartment(department_id) {
-		return `DELETE FROM department WHERE id = ${department_id}`;
+	deleteDepartment() {
+		return `DELETE FROM department WHERE id = ?`;
 	}
 
-	deleteRole(role_id) {
-		return `DELETE FROM role WHERE id = ${role_id}`;
+	deleteRole() {
+		return `DELETE FROM role WHERE id = ?`;
 	}
 
-	deleteEmployee(employee_id) {
-		return `DELETE FROM employee WHERE id = ${employee_id}`;
+	deleteEmployee() {
+		return `DELETE FROM employee WHERE id = ?`;
 	}
 }
 module.exports = SQL;
