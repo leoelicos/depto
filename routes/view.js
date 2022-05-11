@@ -80,4 +80,25 @@ view.get('/roles', (req, res) => {
 	});
 });
 
+// implement route handler for GET request to /api/view/employees
+view.get('/employees', (req, res) => {
+	const sql = new SQL().viewAllEmployees();
+	const params = '';
+	db.query(sql, params, (err, result) => {
+		if (err) {
+			// respond to the GET request with status(BADREQUEST)
+			res.status(BADREQUEST).json({
+				sql_error: err.message,
+				your_sql: sql,
+			});
+		} else {
+			// respond to the GET request with status(CREATED)
+			res.status(CREATED).json({
+				message: `Successfully retrieved employees`,
+				result: result,
+			});
+		}
+	});
+});
+
 module.exports = view;
