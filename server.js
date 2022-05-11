@@ -20,3 +20,6 @@ const app = express();
 
 // function to start server
 function init() {}
+
+// call function to start server
+init();
