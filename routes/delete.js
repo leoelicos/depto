@@ -35,7 +35,7 @@ const db = mysql.createConnection(
 	console.log(`Connected to the cms database.`)
 );
 
-// implement route handler for DELETE request to /api/delete/department
+// implement route handler for DELETE request to /api/delete/department/:id
 del.delete('/department/:id', (req, res) => {
 	const sql = new SQL().deleteDepartment();
 	const id = req.params.id;
@@ -66,7 +66,7 @@ del.delete('/department/:id', (req, res) => {
 	});
 });
 
-// implement route handler for DELETE request to /api/delete/role
+// implement route handler for DELETE request to /api/delete/role/:id
 del.delete('/role/:id', (req, res) => {
 	const sql = new SQL().deleteRole();
 	const id = req.params.id;
@@ -89,6 +89,37 @@ del.delete('/role/:id', (req, res) => {
 				// respond to the GET request with status(CREATED)
 				res.status(OK).json({
 					message: `Successfully deleted role ${id}`,
+					changes: result.changedRows,
+					result: result,
+				});
+			}
+		}
+	});
+});
+
+// implement route handler for DELETE request to /api/delete/employee/:id
+del.delete('/employee/:id', (req, res) => {
+	const sql = new SQL().deleteEmployee();
+	const id = req.params.id;
+	const params = id;
+	db.query(sql, params, (err, result) => {
+		if (err) {
+			// respond to the GET request with status(BADREQUEST)
+			res.status(BADREQUEST).json({
+				sql_error: err.message,
+				your_sql: sql,
+			});
+		} else {
+			if (result.affectedRows === 0) {
+				// respond to the GET request with status(NOTFOUND)
+				res.status(NOTFOUND).json({
+					message: `Couldn't find employee ${id}`,
+					result: result,
+				});
+			} else {
+				// respond to the GET request with status(CREATED)
+				res.status(OK).json({
+					message: `Successfully deleted employee ${id}`,
 					changes: result.changedRows,
 					result: result,
 				});
