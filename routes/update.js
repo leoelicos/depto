@@ -17,4 +17,7 @@ const NOTFOUND = 404;
 // modularize route logic. This utility is exported at the end of this file.
 const update = require('express').Router();
 
+// mysql2 is an npm library package which allows javascript access to an SQL database
+const mysql = require('mysql2');
+
 module.exports = update;
