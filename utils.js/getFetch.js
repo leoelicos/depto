@@ -33,3 +33,10 @@ const getEmployeesByDepartment = (department_id) =>
 	})
 		.then((res) => res.json())
 		.then((data) => data);
+
+const getEmployeesByManager = (manager_id) =>
+	fetch(`/api/view/employeesByManager/${manager_id}`, {
+		method: 'GET',
+	})
+		.then((res) => res.json())
+		.then((data) => data);
