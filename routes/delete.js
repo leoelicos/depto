@@ -21,4 +21,7 @@ const del = require('express').Router();
 // import SQL class
 const SQL = require('../utils/sql');
 
+// mysql2 is an npm library package which allows javascript access to an SQL database
+const mysql = require('mysql2');
+
 module.exports = del;
