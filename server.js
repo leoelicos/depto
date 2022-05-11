@@ -12,6 +12,9 @@ const express = require('express');
 // mysql2 is an npm library package which allows javascript access to an SQL database
 const mysql = require('mysql2');
 
+// import modular router for /api
+const api = require('./routes/index');
+
 // process.env.PORT is a requirement for Heroku deployment, in case we need to later on: https://help.heroku.com/P1AVPANS/why-is-my-node-js-app-crashing-with-an-r10-error
 const PORT = process.env.PORT || 3001;
 
