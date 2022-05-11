@@ -19,6 +19,11 @@ class SQL {
       VALUES ("${department_name}");`;
 	}
 
+	addRole(role_title, role_salary, department_id) {
+		return `INSERT INTO role (title, salary, department_id)
+      VALUES ("${role_title}", ${role_salary}, ${department_id});`;
+	}
+
 	/*
    Read
    */
