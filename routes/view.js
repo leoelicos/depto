@@ -161,4 +161,34 @@ view.get('/employeesByManager/:manager_id', (req, res) => {
 	});
 });
 
+// implement route handler for GET request to /api/view/totalUtilizedBudget/:department_id
+view.get('/totalUtilizedBudget/:department_id', (req, res) => {
+	const sql = new SQL().viewTotalUtilizedBudget();
+	const { department_id } = req.params;
+	const params = department_id;
+	db.query(sql, params, (err, result) => {
+		if (err) {
+			// respond to the GET request with status(BADREQUEST)
+			res.status(BADREQUEST).json({
+				sql_error: err.message,
+				your_sql: sql,
+			});
+		} else {
+			if (result.length === 0) {
+				// respond to the GET request with status(NOTFOUND)
+				res.status(NOTFOUND).json({
+					message: `Couldn't find budget for department ${department_id}`,
+					result: result,
+				});
+			} else {
+				// respond to the GET request with status(CREATED)
+				res.status(CREATED).json({
+					message: `Successfully retrieved budget of department ${department_id}`,
+					result: result,
+				});
+			}
+		}
+	});
+});
+
 module.exports = view;
