@@ -20,3 +20,6 @@ const updateRouter = require('./update');
 
 // import modular router for /delete
 const deleteRouter = require('./delete');
+
+// assign variable for readability
+const app = express();
