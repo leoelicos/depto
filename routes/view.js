@@ -15,7 +15,7 @@ Copyright Leo Wong 2022
 
 // HTTP response status codes: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 const CREATED = 201;
-const BADREQUEST = 404;
+const BADREQUEST = 400;
 const NOTFOUND = 404;
 
 // modularize route logic. This utility is exported at the end of this file.
