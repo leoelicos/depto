@@ -45,6 +45,17 @@ class SQL {
 			ON r.department_id = d.id;`;
 	}
 
+	viewAllEmployees() {
+		return `SELECT e.id, e.first_name, e.last_name, title, name AS department, salary, CONCAT(e2.first_name,' ',e2.last_name) AS manager 
+      FROM employee AS e 
+      INNER JOIN role AS r 
+      ON e.role_id = r.id 
+      INNER JOIN department AS d
+      ON r.department_id = d.id
+      LEFT JOIN employee AS e2
+      on e.manager_id = e2.id;`;
+	}
+
 	/*
    Update
    */
