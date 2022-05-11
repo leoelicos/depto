@@ -13,7 +13,7 @@ const express = require('express');
 const addRouter = require('./add');
 
 // import modular router for /view
-// const viewRouter = require('./view');
+const viewRouter = require('./view');
 
 // import modular router for /update
 // const updateRouter = require('./update');
@@ -28,7 +28,7 @@ const app = express();
 app.use('/add', addRouter);
 
 // implement mounted middleware for handling /view
-// app.use('/view', viewRouter);
+app.use('/view', viewRouter);
 
 // implement mounted middleware for handling /update
 // app.use('/update', updateRouter);
