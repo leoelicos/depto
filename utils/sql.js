@@ -88,6 +88,10 @@ class SQL {
 		return `UPDATE employee SET role_id = ${role_id} WHERE employee_id = ${employee_id}`;
 	}
 
+	updateEmployeeManager(employee_id, manager_id) {
+		return `UPDATE employee SET manager_id = ${manager_id} WHERE employee_id = ${employee_id}`;
+	}
+
 	/* 
    Delete
    */
