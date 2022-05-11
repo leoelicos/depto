@@ -20,4 +20,15 @@ const update = require('express').Router();
 // mysql2 is an npm library package which allows javascript access to an SQL database
 const mysql = require('mysql2');
 
+// Connect to database
+const db = mysql.createConnection(
+	{
+		host: 'localhost',
+		user: 'root',
+		password: 'xxxx',
+		database: 'cms',
+	},
+	console.log(`Connected to the cms database.`)
+);
+
 module.exports = update;
