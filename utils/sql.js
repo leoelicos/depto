@@ -16,17 +16,17 @@ class SQL {
 
 	addDepartment() {
 		return `INSERT INTO department (name)
-      VALUES ("?");`;
+      VALUES (?);`;
 	}
 
-	addRole(role_title, role_salary, department_id) {
+	addRole() {
 		return `INSERT INTO role (title, salary, department_id)
-      VALUES ("${role_title}", ${role_salary}, ${department_id});`;
+      VALUES (?, ?, ?);`;
 	}
 
-	addEmployee(first_name, last_name, role_id, manager_id) {
-		return `INSERT INTO employee (first_name, last_name, role_id, manager_id)
-      VALUES ("${first_name}", "${last_name}", ${role_id}, ${manager_id});`;
+	addEmployee() {
+		return `INSERT INTO mployee (first_name, last_name, role_id, manager_id)
+      VALUES (?, ?, ?, ?);`;
 	}
 
 	/*
