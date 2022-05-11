@@ -28,3 +28,24 @@ const addDepartment = (name) =>
 		.catch((error) => {
 			console.error('Error in POST request:', error);
 		});
+
+const addRole = (title, salary, department_id) =>
+	fetch('/api/role', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			title: title,
+			salary: salary,
+			department_id: department_id,
+		}),
+	})
+		.then((res) => res.json())
+		.then((data) => {
+			console.log('Successful POST request:', data);
+			return data;
+		})
+		.catch((error) => {
+			console.error('Error in POST request:', error);
+		});
