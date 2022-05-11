@@ -34,4 +34,27 @@ const db = mysql.createConnection(
 	console.log(`Connected to the cms database.`)
 );
 
+// implement route handler for PUT request to /api/update/employeeRole/
+update.put('/employeeRole/', (req, res) => {
+	const sql = new SQL().updateEmployeeRole();
+	const { role_id, employee_id } = req.body;
+	const params = [role_id, employee_id];
+	db.query(sql, params, (err, result) => {
+		if (err) {
+			// respond to the GET request with status(BADREQUEST)
+			res.status(BADREQUEST).json({
+				sql_error: err.message + 'hello',
+				your_sql: sql,
+			});
+		} else {
+			// respond to the GET request with status(CREATED)
+			res.status(CREATED).json({
+				message: `Successfully changed employee ${employee_id} role to ${role_id}`,
+				changes: result.changedRows,
+				result: result,
+			});
+		}
+	});
+});
+
 module.exports = update;
