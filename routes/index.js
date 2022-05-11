@@ -32,3 +32,6 @@ app.use('/view', viewRouter);
 
 // implement mounted middleware for handling /update
 app.use('/update', updateRouter);
+
+// implement mounted middleware for handling /delete
+app.use('/delete', deleteRouter);
