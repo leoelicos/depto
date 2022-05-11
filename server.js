@@ -19,7 +19,11 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 // function to start server
-function init() {}
+function init() {
+	//
+	// implement middleware for parsing JSON
+	app.use(express.json());
+}
 
 // call function to start server
 init();
