@@ -26,3 +26,10 @@ const getEmployees = () =>
 	})
 		.then((res) => res.json())
 		.then((data) => data);
+
+const getEmployeesByDepartment = (department_id) =>
+	fetch(`/api/view/employeesByDepartment/${department_id}`, {
+		method: 'GET',
+	})
+		.then((res) => res.json())
+		.then((data) => data);
