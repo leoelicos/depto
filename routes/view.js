@@ -59,4 +59,25 @@ view.get('/departments', (req, res) => {
 	});
 });
 
+// implement route handler for GET request to /api/view/roles
+view.get('/roles', (req, res) => {
+	const sql = new SQL().viewAllRoles();
+	const params = '';
+	db.query(sql, params, (err, result) => {
+		if (err) {
+			// respond to the GET request with status(BADREQUEST)
+			res.status(BADREQUEST).json({
+				sql_error: err.message,
+				your_sql: sql,
+			});
+		} else {
+			// respond to the GET request with status(CREATED)
+			res.status(CREATED).json({
+				message: `Successfully retrieved roles`,
+				result: result,
+			});
+		}
+	});
+});
+
 module.exports = view;
