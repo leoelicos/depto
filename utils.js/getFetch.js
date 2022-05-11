@@ -1,7 +1,14 @@
 /* 
 getFetch.js
 
-This utility file contains helper GET fetch functions
+This utility file contains helper GET fetch methods
+
+getDepartments()
+getRoles()
+getEmployees()
+getEmployeesByDepartment()
+getEmployeesByManager()
+getTotalUtilizedBudget()
 
 Copyright Leo Wong 2022
 */
