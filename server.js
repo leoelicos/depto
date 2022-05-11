@@ -23,6 +23,9 @@ function init() {
 	//
 	// implement middleware for parsing JSON
 	app.use(express.json());
+
+	// implement middleware for parsing urlencoded form data
+	app.use(express.urlencoded({ extended: false }));
 }
 
 // call function to start server
