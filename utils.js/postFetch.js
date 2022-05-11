@@ -49,3 +49,25 @@ const addRole = (title, salary, department_id) =>
 		.catch((error) => {
 			console.error('Error in POST request:', error);
 		});
+
+const addEmployee = (first_name, last_name, role_id, manager_id) =>
+	fetch('/api/employee', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			first_name: first_name,
+			last_name: last_name,
+			role_id: role_id,
+			manager_id: manager_id,
+		}),
+	})
+		.then((res) => res.json())
+		.then((data) => {
+			console.log('Successful POST request:', data);
+			return data;
+		})
+		.catch((error) => {
+			console.error('Error in POST request:', error);
+		});
