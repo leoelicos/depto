@@ -28,3 +28,23 @@ const updateEmployeeRole = (employee_id, role_id) =>
 		.catch((error) => {
 			console.error('Error in PUT request:', error);
 		});
+
+const updateEmployeeManager = (employee_id, manager_id) =>
+	fetch('/api/employeeManager', {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			employee_id: employee_id,
+			manager_id: manager_id,
+		}),
+	})
+		.then((res) => res.json())
+		.then((data) => {
+			console.log('Successful PUT request:', data);
+			return data;
+		})
+		.catch((error) => {
+			console.error('Error in PUT request:', error);
+		});
