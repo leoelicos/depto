@@ -31,6 +31,10 @@ Source code: [Employee Management System on GitHub](https://github.com/leoelicos
 
 ## Usage
 
+https://user-images.githubusercontent.com/99461390/168243511-6bfe0235-8822-4196-835a-4f8aa33cdbf5.mp4
+
+-  Video demo is also on YouTube: (https://www.youtube.com/watch?v=PrU1IIxCjIs)
+
 ### Use the up and down keys to navigate menu
 
 ### Press the enter key to select menu items
@@ -52,12 +56,6 @@ Source code: [Employee Management System on GitHub](https://github.com/leoelicos
 | Delete Role                              | Delete specific role from database                |
 | Delete Employee                          | Delete specific employee from database            |
 | Quit                                     | Exit the application                              |
-
--  Video demo:
-
-https://user-images.githubusercontent.com/99461390/168243511-6bfe0235-8822-4196-835a-4f8aa33cdbf5.mp4
-
--  Video demo is also on YouTube: (https://www.youtube.com/watch?v=PrU1IIxCjIs)
 
 ## Screenshots
 
