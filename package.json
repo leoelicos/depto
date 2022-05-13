@@ -18,8 +18,7 @@
 	},
 	"keywords": [
 		"inquirer",
-		"sql",
-		"express"
+		"sql"
 	],
 	"author": "Leo Wong",
 	"license": "MIT",
@@ -27,8 +26,5 @@
 		"url": "https://github.com/leoelicos/bcs-12-employee-management-system/issues"
 	},
 	"homepage": "https://github.com/leoelicos/bcs-12-employee-management-system#readme",
-	"devDependencies": {
-		"jest": "^28.1.0"
-	},
 	"exports": "./typings/mysql/lib/Connection"
 }
