@@ -46,16 +46,31 @@ class SQL {
 	}
 
 	viewAllEmployees() {
-		return `SELECT e.id, e.first_name, e.last_name, title, name AS department, salary, CONCAT(e2.first_name,' ',e2.last_name) AS manager 
-      FROM employee AS e 
-      INNER JOIN role AS r 
-      ON e.role_id = r.id 
-      INNER JOIN department AS d
-      ON r.department_id = d.id
-      LEFT JOIN employee AS e2
-      on e.manager_id = e2.id;`;
+		return `SELECT e.id, e.first_name, e.last_name, title, name AS department, salary, CONCAT(e2.first_name,' ',e2.last_name) AS manager
+		FROM employee AS e
+		INNER JOIN role AS r
+		ON e.role_id = r.id
+		INNER JOIN department AS d
+		ON r.department_id = d.id
+		LEFT JOIN employee AS e2
+		ON e.manager_id = e2.id;`;
 	}
 
+	viewAllManagers() {
+		return `SELECT e.id,  e.first_name, e.last_name, title, name AS department, salary, CONCAT(e2.first_name,' ',e2.last_name) AS manager 		     
+		FROM employee AS e
+		INNER JOIN role AS r
+		ON e.role_id = r.id
+		INNER JOIN department AS d
+		ON r.department_id = d.id
+		LEFT JOIN employee AS e2
+		ON e.manager_id = e2.id
+		WHERE e.id IN (SELECT e.manager_id		     
+		FROM employee AS e
+		LEFT JOIN employee AS e2
+		ON e.manager_id = e2.id);`;
+	}
+	// get
 	viewAllEmployeesByDepartment() {
 		return `SELECT e.id, e.first_name, e.last_name, title 
 			FROM employee AS e 
@@ -79,7 +94,7 @@ class SQL {
 	}
 
 	viewTotalUtilizedBudget() {
-		return `SELECT d.name, SUM(salary) AS 'total utilized budget'            
+		return `SELECT d.name AS 'department', SUM(salary) AS 'total utilized budget'            
 		FROM employee AS e
 		INNER JOIN role AS r
 		ON e.role_id = r.id
