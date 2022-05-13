@@ -55,7 +55,7 @@ Source code: [Employee Management System on GitHub](https://github.com/leoelicos
 
 -  Video demo:
 
-GITHUB
+https://user-images.githubusercontent.com/99461390/168243511-6bfe0235-8822-4196-835a-4f8aa33cdbf5.mp4
 
 -  Video demo is also on YouTube: (https://www.youtube.com/watch?v=PrU1IIxCjIs)
 
