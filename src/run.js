@@ -225,6 +225,10 @@ const addEmployee = async () => {
 	const findManagerId = (arr, targetName) => arr.find((val) => `${val.first_name} ${val.last_name}` === targetName);
 	const managerNames = mapManagerNames(managers);
 
+	if (managerNames[0] === 'undefined undefined') {
+		managerNames[0] = 'none';
+	}
+
 	const { first_name: firstName, last_name: lastName, role_name: roleName, manager_name: managerName } = await prompts.addEmployee(roleNames, managerNames);
 
 	const { id: roleId } = findRoleId(roles, roleName);
