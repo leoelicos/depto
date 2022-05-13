@@ -1,6 +1,6 @@
 # Employee Management System
 
-![inquirer](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![SQL](https://img.shields.io/badge/NPM-%23000000.svg?style=for-the-badge&logo=npm&logoColor=white) ![chalk](https://img.shields.io/badge/4.1.2-0?label=chalk&style=for-the-badge&labelColor=white&color=black)
+![MySQL](https://img.shields.io/badge/2.3.3-%2300f.svg?label=MYSQL2&style=for-the-badge&logo=mysql&logoColor=white) ![Inquirer](https://img.shields.io/badge/8.2.4-0?label=Inquirer&style=for-the-badge&labelColor=white&color=black) ![chalk](https://img.shields.io/badge/4.1.2-0?label=chalk&style=for-the-badge&labelColor=white&color=black)
 
 ## Introduction
 
