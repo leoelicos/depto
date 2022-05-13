@@ -129,7 +129,7 @@ class Connection {
 			const params = [first_name, last_name, role_id, manager_id];
 			db.query(sql, params, (err, result) => {
 				if (err) reject(new Error(`Check your SQL: ${err}`));
-				if (result.affectedRows === 0) resolve(`Unable to add employee ${first_name} ${last_name}`);
+				if (!result) resolve(`Unable to add employee ${first_name} ${last_name}. SQL = ${sql}`);
 				resolve(`Added ${first_name} ${last_name} to the database`);
 			});
 		});
