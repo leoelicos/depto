@@ -24,7 +24,8 @@ Source code: [Employee Management System on GitHub](https://github.com/leoelicos
 | Go inside the database folder | `cd db`                                                                        |
 | invoke mysql                  | `mysql -u root -p`                                                             |
 | Enter your mysql password     | `{password}`                                                                   |
-| Create schema                 | `mysql -u root -p`                                                             |
+| Create schema                 | `source schema.sql`                                                            |
+| (optional) Add dummy data     | `source seeds.sql`                                                             |
 | Exit mysql                    | `exit`                                                                         |
 | Import dependencies           | `npm i`                                                                        |
 | Start the app                 | `npm start`                                                                    |
