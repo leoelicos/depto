@@ -62,31 +62,31 @@ https://user-images.githubusercontent.com/99461390/168243511-6bfe0235-8822-4196-
 
 ### Screenshot: Menu
 
-![Screenshot: Menu](./assets/demo1.jpg)
+![Screenshot: Menu](https://user-images.githubusercontent.com/99461390/168408340-d34d4fb2-531b-42b7-b1a3-235b20863510.jpg)
 
 ### Screenshot: View Departments
 
-![Screenshot: View Departments](./assets/demo2.jpg)
+![Screenshot: View Departments](https://user-images.githubusercontent.com/99461390/168408341-0962bbd5-11c0-4cc2-a5b9-8247c1a13515.jpg)
 
 ### Screenshot: View all Roles
 
-![Screenshot: View all Roles](./assets/demo3.jpg)
+![Screenshot: View all Roles](https://user-images.githubusercontent.com/99461390/168408342-a9ebed49-fe90-49d8-8e1f-66686744b280.jpg)
 
 ### Screenshot: View all Employees
 
-![Screenshot: View all Employees](./assets/demo4.jpg)
+![Screenshot: View all Employees](https://user-images.githubusercontent.com/99461390/168408344-2399db85-399c-4a36-87d1-de0b276334c2.jpg)
 
 ### Screenshot: View all Employees by Department
 
-![Screenshot: View all Employees by Department](./assets/demo5.jpg)
+![Screenshot: View all Employees by Department](https://user-images.githubusercontent.com/99461390/168408345-a3845ffe-a0aa-436e-9f26-5e630fa0e8ee.jpg)
 
 ### Screenshot: View all Employees by Manager
 
-![Screenshot: View all Employees by Manager](./assets/demo6.jpg)
+![Screenshot: View all Employees by Manager](https://user-images.githubusercontent.com/99461390/168408347-15ee2c1e-3d0d-4ee7-88ae-2f6e02d852db.jpg)
 
 ### Screenshot: View Total Utilized Budget by Department
 
-![Screenshot: View Total Utilized Budget by Department](./assets/demo7.jpg)
+![Screenshot: View Total Utilized Budget by Department](https://user-images.githubusercontent.com/99461390/168408349-bb7c36a2-a579-49f6-8288-4097fdf6eeaf.jpg)
 
 ## Credits
 
