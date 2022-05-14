@@ -13,6 +13,9 @@ const chalk = require('chalk');
 const primary = (w) => chalk.magenta.bgWhite(` ${w} `);
 const secondary = (w) => chalk.cyan.bgWhite(` ${w} `);
 const tertiary = (w) => chalk.black.bgWhite(` ${w} `);
-const tableOfContents = (heading, headingLength, subheading, subheadingLength, delimiter) => primary(heading).padEnd(headingLength, delimiter) + primary(subheading).padStart(subheadingLength, delimiter);
+const quaternary = (w) => chalk.red(` ${w} `);
 
-module.exports = { primary, secondary, tertiary, tableOfContents };
+const SIZE_OF_SCREEN = 120;
+const logoHelper = (message, padChar) => console.log(' ' + tertiary(message.padEnd(SIZE_OF_SCREEN, padChar)));
+
+module.exports = { primary, secondary, tertiary, quaternary, logoHelper };

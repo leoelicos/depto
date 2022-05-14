@@ -1,63 +1,66 @@
+// package inquirer to handle prompts
+const inquirer = require('inquirer');
+
 // utility function to create good-looking console logs
-const { primary, secondary, tertiary } = require('../src/utils/chalkRender');
+const { primary, secondary } = require('./utils/chalkRender');
 
-class Questions {
-	menu = () => [
-		{
-			name: 'menu',
-			type: 'list',
-			prefix: ' ' + primary('Menu'.padEnd(120)) + '\n',
-			message: secondary('What would you like to do?'.padEnd(120)),
-			choices: ['View All Departments', 'View All Roles', 'View All Employees', 'View Employees by Department', 'View Employees by Manager', 'View Total Utilized Budget by Department', 'Add Department', 'Add Role', 'Add Employee', 'Update Employee Role', 'Update Employee Manager', 'Delete Department', 'Delete Role', 'Delete Employee', 'Quit'],
-			pageSize: 5,
-		},
-	];
+// helper functions to call inquirer on library questions
+class Inquirer {
+	// constructor() {}
 
-	viewEmployeesByDepartment(departmentNames) {
-		return [
+	menu = async () =>
+		await inquirer.prompt([
+			{
+				name: 'menu',
+				type: 'list',
+				prefix: ' ' + primary('Menu'.padEnd(120)) + '\n',
+				message: secondary('What would you like to do?'.padEnd(120)) + '\n > ',
+				choices: ['View All Departments', 'View All Roles', 'View All Employees', 'View Employees by Department', 'View Employees by Manager', 'View Total Utilized Budget by Department', 'Add Department', 'Add Role', 'Add Employee', 'Update Employee Role', 'Update Employee Manager', 'Delete Department', 'Delete Role', 'Delete Employee', 'Quit'],
+				pageSize: 5,
+			},
+		]);
+
+	viewEmployeesByDepartment = (departmentNames) =>
+		inquirer.prompt([
 			{
 				name: 'department_name',
 				type: 'list',
 				message: primary('View employees') + secondary("Which department's employees do you want to view?"),
 				choices: departmentNames,
 			},
-		];
-	}
+		]);
 
-	viewEmployeesByManager(managerNames) {
-		return [
+	viewEmployeesByManager = (managerNames) =>
+		inquirer.prompt([
 			{
 				name: 'manager_name',
 				type: 'list',
 				message: primary('View employees') + secondary("Which manager's employees do you want to view?"),
 				choices: managerNames,
 			},
-		];
-	}
+		]);
 
-	viewTotalUtilizedBudget(departmentNames) {
-		return [
+	viewTotalUtilizedBudgetByDepartment = async (departmentNames) =>
+		inquirer.prompt([
 			{
 				name: 'department_name',
 				type: 'list',
 				message: primary('View budget') + secondary("Which department's total utilized budget do you want to view?"),
 				choices: departmentNames,
 			},
-		];
-	}
+		]);
 
-	addDepartment() {
-		return [
+	addDepartment = () =>
+		inquirer.prompt([
 			{
 				name: 'name',
 				type: 'input',
 				message: primary('Add department') + secondary(`What is the name of the department?`),
 			},
-		];
-	}
+		]);
 
-	addRole(departmentNames) {
-		return [
+	addRole = (departmentNames) =>
+		inquirer.prompt([
 			{
 				name: 'title',
 				type: 'input',
@@ -74,11 +77,10 @@ class Questions {
 				message: primary('Add role') + secondary('Which department does the role belong to?'),
 				choices: departmentNames,
 			},
-		];
-	}
+		]);
 
-	addEmployee(roleNames, managerNames) {
-		return [
+	addEmployee = (roleNames, managerNames) =>
+		inquirer.prompt([
 			{
 				name: 'first_name',
 				type: 'input',
@@ -99,12 +101,12 @@ class Questions {
 				name: 'manager_name',
 				type: 'list',
 				message: primary('Add employee') + secondary("Who is the employee's manager?"),
-				choices: [...managerNames, 'none'],
+				choices: managerNames[0] === 'undefined undefined' ? [...managerNames, 'none'] : ['none'],
 			},
-		];
-	}
-	updateEmployeeRole(employeeNames, roleNames) {
-		return [
+		]);
+
+	updateEmployeeRole = (employeeNames, roleNames) =>
+		inquirer.prompt([
 			{
 				name: 'employee_name',
 				type: 'list',
@@ -117,11 +119,10 @@ class Questions {
 				message: primary('Update employee') + secondary('Which role do you want to assign the selected employee?'),
 				choices: roleNames,
 			},
-		];
-	}
+		]);
 
-	updateEmployeeManager(employeeNames, managerNames) {
-		return [
+	updateEmployeeManager = (employeeNames, managerNames) =>
+		inquirer.prompt([
 			{
 				name: 'employee_name',
 				type: 'list',
@@ -134,39 +135,37 @@ class Questions {
 				message: primary('Update employee') + secondary('Which manager do you want to assign the selected employee?'),
 				choices: [...managerNames, 'none'],
 			},
-		];
-	}
+		]);
 
-	deleteDepartment(departmentNames) {
-		return [
+	deleteDepartment = (departmentNames) =>
+		inquirer.prompt([
 			{
 				name: 'department_name',
 				type: 'list',
 				message: primary('Delete department') + secondary('Which department do you want to delete?'),
 				choices: departmentNames,
 			},
-		];
-	}
-	deleteRole(roleNames) {
-		return [
+		]);
+
+	deleteRole = (roleNames) =>
+		inquirer.prompt([
 			{
 				name: 'role_name',
 				type: 'list',
 				message: primary('Delete role') + secondary('Which role do you want to delete?'),
 				choices: roleNames,
 			},
-		];
-	}
-	deleteEmployee(employeeNames) {
-		return [
+		]);
+
+	deleteEmployee = (employeeNames) =>
+		inquirer.prompt([
 			{
 				name: 'employee_name',
 				type: 'list',
 				message: primary('Delete employee') + secondary('Which employee do you want to delete?'),
 				choices: employeeNames,
 			},
-		];
-	}
+		]);
 }
 
-module.exports = Questions;
+module.exports = Inquirer;

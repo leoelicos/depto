@@ -1,88 +1,101 @@
-/* 
- SQL.js
- 
- this file contains SQL CRUD queries
+// import Connection class
+const db = require('../config/connection');
 
- Copyright Leo Wong 2022
- */
+class Query {
+	getDepartments = () =>
+		new Promise(function (resolve, reject) {
+			const sql = `
+		SELECT id, name AS department 
+		FROM department;
+		`;
+			db.query(sql, (err, result) => {
+				if (err) reject(new Error(`Check your SQL: ${err}`));
+				if (result.length === 0) resolve(['No departments found']);
+				resolve(result);
+			});
+		});
 
-class SQL {
-	//
-	constructor() {}
-
-	/* 
-   Create
-   */
-
-	addDepartment() {
-		return `INSERT INTO department (name)
-      VALUES (?);`;
-	}
-
-	addRole() {
-		return `INSERT INTO role (title, salary, department_id)
-      VALUES (?, ?, ?);`;
-	}
-
-	addEmployee() {
-		return `INSERT INTO employee (first_name, last_name, role_id, manager_id)
-      VALUES (?, ?, ?, ?);`;
-	}
-
-	/*
-   Read
-   */
-
-	viewAllDepartments() {
-		return `SELECT id, name AS department 
-      FROM department;`;
-	}
-
-	viewAllRoles() {
-		return `SELECT r.id, r.title, d.name AS department, r.salary
+	getRoles = () =>
+		new Promise(function (resolve, reject) {
+			const sql = `
+			SELECT r.id, r.title, d.name AS department, r.salary
 			FROM role AS r
 			JOIN department AS d
-			ON r.department_id = d.id;`;
-	}
+			ON r.department_id = d.id;
+			`;
+			db.query(sql, (err, result) => {
+				if (err) reject(new Error(`Check your SQL: ${err}`));
+				if (result.length === 0) resolve(['No roles found']);
+				resolve(result);
+			});
+		});
 
-	viewAllEmployees() {
-		return `SELECT e.id, e.first_name, e.last_name, title, name AS department, salary, CONCAT(e2.first_name,' ',e2.last_name) AS manager
-		FROM employee AS e
-		INNER JOIN role AS r
-		ON e.role_id = r.id
-		INNER JOIN department AS d
-		ON r.department_id = d.id
-		LEFT JOIN employee AS e2
-		ON e.manager_id = e2.id;`;
-	}
+	getEmployees = () =>
+		new Promise(function (resolve, reject) {
+			const sql = `
+			SELECT e.id, e.first_name, e.last_name, title, name AS department, salary, 
+			CONCAT(e2.first_name,' ',e2.last_name) AS manager
+			FROM employee AS e
+			INNER JOIN role AS r
+			ON e.role_id = r.id
+			INNER JOIN department AS d
+			ON r.department_id = d.id
+			LEFT JOIN employee AS e2
+			ON e.manager_id = e2.id;
+			`;
+			db.query(sql, (err, result) => {
+				if (err) reject(new Error(`Check your SQL: ${err}`));
+				if (result.length === 0) resolve(['No employees found']);
+				resolve(result);
+			});
+		});
 
-	viewAllManagers() {
-		return `SELECT e.id,  e.first_name, e.last_name, title, name AS department, salary, CONCAT(e2.first_name,' ',e2.last_name) AS manager 		     
-		FROM employee AS e
-		INNER JOIN role AS r
-		ON e.role_id = r.id
-		INNER JOIN department AS d
-		ON r.department_id = d.id
-		LEFT JOIN employee AS e2
-		ON e.manager_id = e2.id
-		WHERE e.id IN (SELECT e.manager_id		     
-		FROM employee AS e
-		LEFT JOIN employee AS e2
-		ON e.manager_id = e2.id);`;
-	}
-	// get
-	viewAllEmployeesByDepartment() {
-		return `SELECT e.id, e.first_name, e.last_name, title 
+	getManagers = () =>
+		new Promise(function (resolve, reject) {
+			const sql = `
+			SELECT e.id,  e.first_name, e.last_name, title, name AS department, salary, CONCAT(e2.first_name,' ',e2.last_name) AS manager 		     
+			FROM employee AS e
+			INNER JOIN role AS r
+			ON e.role_id = r.id
+			INNER JOIN department AS d
+			ON r.department_id = d.id
+			LEFT JOIN employee AS e2
+			ON e.manager_id = e2.id
+			WHERE e.id IN (SELECT e.manager_id		     
+			FROM employee AS e
+			LEFT JOIN employee AS e2
+			ON e.manager_id = e2.id);
+			`;
+			db.query(sql, (err, result) => {
+				if (err) reject(new Error(`Check your SQL: ${err}`));
+				// if (result.length === 0) resolve(['No managers found']);
+				resolve(result);
+			});
+		});
+
+	getEmployeesByDepartment = (department_id, departmentName) =>
+		new Promise(function (resolve, reject) {
+			const sql = `
+			SELECT e.id, e.first_name, e.last_name, title 
 			FROM employee AS e 
 			INNER JOIN role AS r 
 			ON e.role_id = r.id 
 			INNER JOIN department AS d
 			ON r.department_id = d.id
-			WHERE d.id = ?;`;
-	}
+			WHERE d.id = ?;
+			`;
+			const params = department_id;
+			db.query(sql, params, (err, result) => {
+				if (err) reject(new Error(`Check your SQL: ${err}`));
+				if (result.length === 0) resolve([`No employees found in department ${departmentName}`]);
+				resolve(result);
+			});
+		});
 
-	viewAllEmployeesByManager() {
-		return `SELECT e.id, e.first_name, e.last_name, title 
+	getEmployeesByManager = (manager_id, managerName) =>
+		new Promise(function (resolve, reject) {
+			const sql = `
+			SELECT e.id, e.first_name, e.last_name, title 
 			FROM employee AS e 
 			INNER JOIN role AS r 
 			ON e.role_id = r.id 
@@ -90,46 +103,129 @@ class SQL {
 			ON r.department_id = d.id
 			LEFT JOIN employee AS e2
 			on e.manager_id = e2.id
-			WHERE e.manager_id = ?;`;
-	}
+			WHERE e.manager_id = ?;
+			`;
+			const params = manager_id;
+			db.query(sql, params, (err, result) => {
+				if (err) reject(new Error(`Check your SQL: ${err}`));
+				if (result.length === 0) resolve([`No employees found with manager ${managerName}`]);
+				resolve(result);
+			});
+		});
 
-	viewTotalUtilizedBudget() {
-		return `SELECT d.name AS 'department', SUM(salary) AS 'total utilized budget'            
-		FROM employee AS e
-		INNER JOIN role AS r
-		ON e.role_id = r.id
-		INNER JOIN department AS d
-		ON r.department_id = d.id
-		WHERE r.department_id = ?;
-		`;
-	}
+	getTotalUtilizedBudget = (department_id) =>
+		new Promise(function (resolve, reject) {
+			const sql = `
+			SELECT d.name AS 'department', SUM(salary) AS 'total utilized budget'            
+			FROM employee AS e
+			INNER JOIN role AS r
+			ON e.role_id = r.id
+			INNER JOIN department AS d
+			ON r.department_id = d.id
+			WHERE r.department_id = ?;
+			`;
+			const params = department_id;
+			db.query(sql, params, (err, result) => {
+				if (err) reject(new Error(`Check your SQL: ${err}; sql = ${sql}; params = ${params}`));
+				// if (result.length === 0) resolve([`No utilizd budget found for department ${department_id}`]);
+				resolve(result);
+			});
+		});
 
-	/*
-   Update
-   */
+	addDepartment = (name) =>
+		new Promise(function (resolve, reject) {
+			const sql = `INSERT INTO department (name)
+			VALUES (?);`;
+			const params = name;
+			db.query(sql, params, (err, result) => {
+				if (err) reject(new Error(`Check your SQL: ${err}`));
+				if (result.affectedRows === 0) resolve(`Unable to add department ${name}`);
+				resolve(`Added ${name} to the database`);
+			});
+		});
 
-	updateEmployeeRole() {
-		return `UPDATE employee SET role_id = ? WHERE id = ?`;
-	}
+	addRole = (title, salary, department_id) =>
+		new Promise(function (resolve, reject) {
+			const sql = `INSERT INTO role (title, salary, department_id)
+			VALUES (?, ?, ?);`;
+			const params = [title, salary, department_id];
+			db.query(sql, params, (err, result) => {
+				if (err) reject(new Error(`Check your SQL: ${err}`));
+				if (result.affectedRows === 0) resolve(`Unable to add role ${title}`);
+				resolve(`Added ${title} to the database`);
+			});
+		});
 
-	updateEmployeeManager() {
-		return `UPDATE employee SET manager_id = ? WHERE id = ?`;
-	}
+	addEmployee = (first_name, last_name, role_id, manager_id) =>
+		new Promise(function (resolve, reject) {
+			const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id)
+			VALUES (?, ?, ?, ?);`;
+			const params = [first_name, last_name, role_id, manager_id];
+			db.query(sql, params, (err, result) => {
+				if (err) reject(new Error(`Check your SQL: ${err}`));
+				if (!result) resolve(`Unable to add employee ${first_name} ${last_name}. SQL = ${sql}`);
+				resolve(`Added ${first_name} ${last_name} to the database`);
+			});
+		});
 
-	/* 
-   Delete
-		  */
+	updateEmployeeRole = (employee_id, role_id, employeeName, roleName) =>
+		new Promise(function (resolve, reject) {
+			const sql = `UPDATE employee SET role_id = ? WHERE id = ?`;
+			const params = [role_id, employee_id];
+			db.query(sql, params, (err, result) => {
+				if (err) reject(new Error(`Check your SQL: ${err}`));
+				if (result.affectedRows === 0) resolve(`Unable to find employee ${employee_id} or role ${role_id}`);
+				if (result.affectedRows === 1 && result.changedRows === 0) resolve(`Found employee ${employee_id} and role ${role_id} but no change was made`);
+				resolve(`Updated ${employeeName}'s role to ${roleName}`);
+			});
+		});
 
-	deleteDepartment() {
-		return `DELETE FROM department WHERE id = ?`;
-	}
+	updateEmployeeManager = (employee_id, manager_id, employeeName, managerName) =>
+		new Promise(function (resolve, reject) {
+			const sql = `UPDATE employee SET manager_id = ? WHERE id = ?`;
+			const params = [manager_id, employee_id];
+			db.query(sql, params, (err, result) => {
+				if (err) reject(new Error(`Check your SQL: ${err}`));
+				if (result.affectedRows === 0) resolve(`Unable to find employee ${employee_id} or manager ${manager_id}`);
+				if (result.affectedRows === 1 && result.changedRows === 0) resolve(`Found employee ${employee_id} and manager ${manager_id} but no change was made`);
+				resolve(`Updated ${employeeName}'s manager to ${managerName}`);
+			});
+		});
 
-	deleteRole() {
-		return `DELETE FROM role WHERE id = ?`;
-	}
+	deleteDepartment = (department_id, departmentName) =>
+		new Promise(function (resolve, reject) {
+			const sql = `DELETE FROM department WHERE id = ?`;
+			const params = department_id;
+			db.query(sql, params, (err, result) => {
+				if (err) reject(new Error(`Check your SQL: ${err}`));
+				if (result.affectedRows === 0) resolve(`Unable to find department ${departmentName}`);
+				resolve(`Deleted ${departmentName} from departments`);
+			});
+		});
 
-	deleteEmployee() {
-		return `DELETE FROM employee WHERE id = ?`;
-	}
+	deleteRole = (role_id, roleName) =>
+		new Promise(function (resolve, reject) {
+			const sql = `DELETE FROM role WHERE id = ?`;
+			const params = role_id;
+			db.query(sql, params, (err, result) => {
+				if (err) reject(new Error(`Check your SQL: ${err}`));
+				if (result.affectedRows === 0) resolve(`Unable to find role ${roleName}`);
+				resolve(`Deleted ${roleName} from roles`);
+			});
+		});
+
+	deleteEmployee = (employee_id, employeeName) =>
+		new Promise(function (resolve, reject) {
+			const sql = `DELETE FROM employee WHERE id = ?`;
+			const params = employee_id;
+			db.query(sql, params, (err, result) => {
+				if (err) reject(new Error(`Check your SQL: ${err}`));
+				if (result.affectedRows === 0) resolve(`Unable to find employee ${employeeName}`);
+				resolve(`Deleted ${employeeName} from employees`);
+			});
+		});
+
+	// Disconnect from database
+	disconnectDatabase = () => db.end();
 }
-module.exports = SQL;
+module.exports = Query;
