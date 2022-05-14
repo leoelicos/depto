@@ -88,6 +88,10 @@ https://user-images.githubusercontent.com/99461390/168243511-6bfe0235-8822-4196-
 
 ![Screenshot: View Total Utilized Budget by Department](https://user-images.githubusercontent.com/99461390/168408349-bb7c36a2-a579-49f6-8288-4097fdf6eeaf.jpg)
 
+### Screenshot: Error Handling
+
+![Screenshot 2022-05-14 234916](https://user-images.githubusercontent.com/99461390/168428587-8cf565fb-be8b-45b5-87ed-1edc9adf227b.jpg)
+
 ## Credits
 
 -  BCS Resources
