@@ -1,24 +1,26 @@
 /* 
-server.js
+index.js
 
 This script contains necessary code to run Employee Management System
 
 Copyright Leo Wong 2022
 */
 
-// utility function to create new classes based on user input
-const run = require('./src/run');
-const { tertiary } = require('./src/utils/chalkRender');
+const { logoHelper } = require('./src/utils/chalkRender');
+
+const EMS = require('./src/Ems.js');
+const ems = new EMS();
+
 // function to start app
 function init() {
 	//
-	console.log(' ' + tertiary(''.padEnd(120, ' ')));
-	console.log(' ' + tertiary(''.padEnd(120, '*')));
-	console.log(' ' + tertiary(' EMPLOYEE MANAGEMENT SYSTEM '.padEnd(120, ' ')));
-	console.log(' ' + tertiary(''.padEnd(120, '*')));
-	console.log(' ' + tertiary(''.padEnd(120, ' ')));
+	logoHelper('', ' ');
+	logoHelper('', '*');
+	logoHelper(' EMPLOYEE MANAGEMENT SYSTEM ', ' ');
+	logoHelper('', '*');
+	logoHelper('', ' ');
 
-	run();
+	ems.run();
 }
 
 // call function to start app
