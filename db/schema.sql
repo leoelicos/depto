@@ -1,3 +1,9 @@
+/* 
+ * Employee Management System
+ * schema.sql
+ * This file contains necessary SQL to create a new database
+ * Copyright 2022 Leo Wong
+ */
 DROP DATABASE IF EXISTS ems;
 CREATE DATABASE ems;
 
@@ -9,12 +15,12 @@ DROP TABLE IF EXISTS employee;
 
 CREATE TABLE department (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(30) NOT NULL
+  name VARCHAR(30) UNIQUE NOT NULL
 );
 
 CREATE TABLE role (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  title VARCHAR(30) NOT NULL,
+  title VARCHAR(30) UNIQUE NOT NULL,
   salary DECIMAL NOT NULL,
   department_id INT,
   FOREIGN KEY (department_id)
