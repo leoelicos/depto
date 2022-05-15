@@ -1,8 +1,8 @@
 const Prompts = require('./Inquirer');
 const prompts = new Prompts();
 
-const Query = require('./Sql');
-const query = new Query();
+const Mysql = require('./Mysql');
+const mysql = new Mysql();
 
 const { secondary, tertiary, quaternary } = require('./utils/chalkRender');
 
@@ -50,31 +50,31 @@ class EMS {
 
 	quit = () => {
 		console.log(tertiary('Thank you for using Employee Management System.'));
-		query.disconnectDatabase();
+		mysql.disconnectDatabase();
 		process.exit();
 	};
 	printDepartments = async () => {
-		const departments = await query.getDepartments();
+		const departments = await mysql.getDepartments();
 
 		console.log('\nTable: All Departments');
 		console.table(departments);
 	};
 
 	printRoles = async () => {
-		const roles = await query.getRoles();
+		const roles = await mysql.getRoles();
 
 		console.log('\nTable: All Roles');
 		console.table(roles);
 	};
 
 	printEmployees = async () => {
-		const employees = await query.getEmployees();
+		const employees = await mysql.getEmployees();
 		console.log('\nTable: All employees');
 		console.table(employees);
 	};
 
 	printEmployeesByDepartment = async () => {
-		const departments = await query.getDepartments();
+		const departments = await mysql.getDepartments();
 		const mapDepartmentNames = (arr) => arr.map((val) => `${val.department}`);
 		const findDepartmentId = (arr, targetName) => arr.find((val) => val.department === targetName);
 		const departmentNames = mapDepartmentNames(departments);
@@ -88,7 +88,7 @@ class EMS {
 
 		const { id: department_id } = findDepartmentId(departments, departmentName);
 
-		const employees = await query.getEmployeesByDepartment(department_id, departmentName);
+		const employees = await mysql.getEmployeesByDepartment(department_id, departmentName);
 
 		console.log(`\nTable: Employees in ${departmentName}`);
 		console.table(employees);
@@ -96,7 +96,7 @@ class EMS {
 	printEmployeesByManager = async () => {
 		const mapManagerNames = (arr) => arr.map((val) => `${val.first_name} ${val.last_name}`);
 		const findManagerId = (arr, targetName) => arr.find((val) => `${val.first_name} ${val.last_name}` === targetName);
-		const managers = await query.getManagers();
+		const managers = await mysql.getManagers();
 		const managerNames = mapManagerNames(managers);
 
 		if (managerNames[0] === undefined) {
@@ -107,14 +107,14 @@ class EMS {
 		const { manager_name: managerName } = await prompts.viewEmployeesByManager(managerNames);
 		const { id: managerId } = findManagerId(managers, managerName);
 
-		const employees = await query.getEmployeesByManager(managerId, managerName);
+		const employees = await mysql.getEmployeesByManager(managerId, managerName);
 
 		console.log(`\nTable: ${managerName}'s team`);
 		console.table(employees);
 	};
 
 	printUtilizedBudgetByDepartment = async () => {
-		const departments = await query.getDepartments();
+		const departments = await mysql.getDepartments();
 		const mapDepartmentNames = (arr) => arr.map((val) => `${val.department}`);
 		const findDepartmentId = (arr, targetName) => arr.find((val) => val.department === targetName);
 		const departmentNames = mapDepartmentNames(departments);
@@ -128,14 +128,14 @@ class EMS {
 
 		const { id: department_id } = findDepartmentId(departments, department_name);
 
-		const budget = await query.getTotalUtilizedBudget(department_id);
+		const budget = await mysql.getTotalUtilizedBudget(department_id);
 
 		console.log(`\nTable: Total Utilized Budget in ${department_name}`);
 		console.table(budget);
 	};
 
 	deleteEmployee = async () => {
-		const employees = await query.getEmployees();
+		const employees = await mysql.getEmployees();
 		const mapEmployeeNames = (arr) => arr.map((val) => `${val.first_name} ${val.last_name}`);
 		const findEmployeeId = (arr, targetName) => arr.find((val) => `${val.first_name} ${val.last_name}` === targetName);
 		const employeeNames = mapEmployeeNames(employees);
@@ -149,12 +149,12 @@ class EMS {
 
 		const { id: employee_id } = findEmployeeId(employees, employeeName);
 
-		const result = await query.deleteEmployee(employee_id, employeeName);
+		const result = await mysql.deleteEmployee(employee_id, employeeName);
 		console.log('   ' + secondary(result));
 	};
 
 	deleteRole = async () => {
-		const roles = await query.getRoles();
+		const roles = await mysql.getRoles();
 		const mapRoleNames = (arr) => arr.map((val) => `${val.title}`);
 		const findRoleId = (arr, targetName) => arr.find((val) => val.title === targetName);
 		const roleNames = mapRoleNames(roles);
@@ -168,12 +168,12 @@ class EMS {
 
 		const { id: role_id } = findRoleId(roles, roleName);
 
-		const result = await query.deleteRole(role_id, roleName);
+		const result = await mysql.deleteRole(role_id, roleName);
 		console.log('   ' + secondary(result));
 	};
 
 	deleteDepartment = async () => {
-		const departments = await query.getDepartments();
+		const departments = await mysql.getDepartments();
 		const mapDepartmentNames = (arr) => arr.map((val) => `${val.department}`);
 		const findDepartmentId = (arr, targetName) => arr.find((val) => val.department === targetName);
 		const departmentNames = mapDepartmentNames(departments);
@@ -186,13 +186,13 @@ class EMS {
 		const { department_name: departmentName } = await prompts.deleteDepartment(departmentNames);
 		const { id: department_id } = findDepartmentId(departments, departmentName);
 
-		const result = await query.deleteDepartment(department_id, departmentName);
+		const result = await mysql.deleteDepartment(department_id, departmentName);
 		console.log('   ' + secondary(result));
 	};
 
 	// updateEmployeeManager
 	updateEmployeeManager = async () => {
-		const employees = await query.getEmployees();
+		const employees = await mysql.getEmployees();
 		const mapEmployeeNames = (arr) => arr.map((val) => `${val.first_name} ${val.last_name}`);
 		const findEmployeeId = (arr, targetName) => arr.find((val) => `${val.first_name} ${val.last_name}` === targetName);
 		const employeeNames = mapEmployeeNames(employees);
@@ -202,7 +202,7 @@ class EMS {
 			return;
 		}
 
-		const managers = await query.getEmployees();
+		const managers = await mysql.getEmployees();
 		const mapManagerNames = (arr) => arr.map((val) => `${val.first_name} ${val.last_name}`);
 		const findManagerId = (arr, targetName) => arr.find((val) => `${val.first_name} ${val.last_name}` === targetName);
 		const managerNames = mapManagerNames(managers);
@@ -220,13 +220,13 @@ class EMS {
 		} else {
 			managerId = findManagerId(managers, managerName).id;
 		}
-		const result = await query.updateEmployeeManager(employeeId, managerId, employeeName, managerName);
+		const result = await mysql.updateEmployeeManager(employeeId, managerId, employeeName, managerName);
 		console.log('   ' + secondary(result));
 	};
 
 	// updateEmployeeRole
 	updateEmployeeRole = async () => {
-		const employees = await query.getEmployees();
+		const employees = await mysql.getEmployees();
 		const mapEmployeeNames = (arr) => arr.map((val) => `${val.first_name} ${val.last_name}`);
 		const findEmployeeId = (arr, targetName) => arr.find((val) => `${val.first_name} ${val.last_name}` === targetName);
 		const employeeNames = mapEmployeeNames(employees);
@@ -236,7 +236,7 @@ class EMS {
 			return;
 		}
 
-		const roles = await query.getRoles();
+		const roles = await mysql.getRoles();
 		const mapRoleNames = (arr) => arr.map((val) => `${val.title}`);
 		const findRoleId = (arr, targetName) => arr.find((val) => val.title === targetName);
 		const roleNames = mapRoleNames(roles);
@@ -251,18 +251,18 @@ class EMS {
 		const { id: employeeId } = findEmployeeId(employees, employeeName);
 		const { id: roleId } = findRoleId(roles, roleName);
 
-		const result = await query.updateEmployeeRole(employeeId, roleId, employeeName, roleName);
+		const result = await mysql.updateEmployeeRole(employeeId, roleId, employeeName, roleName);
 		console.log('   ' + secondary(result));
 	};
 
 	addDepartment = async () => {
 		const { name } = await prompts.addDepartment();
-		const result = await query.addDepartment(name);
+		const result = await mysql.addDepartment(name);
 		console.log('   ' + secondary(result));
 	};
 
 	addRole = async () => {
-		const departments = await query.getDepartments();
+		const departments = await mysql.getDepartments();
 		const mapDepartmentNames = (arr) => arr.map((val) => `${val.department}`);
 		const findDepartmentId = (arr, targetName) => arr.find((val) => val.department === targetName);
 		const departmentNames = mapDepartmentNames(departments);
@@ -276,12 +276,12 @@ class EMS {
 
 		const { id: department_id } = findDepartmentId(departments, department_name);
 
-		const result = await query.addRole(title, salary, department_id);
+		const result = await mysql.addRole(title, salary, department_id);
 		console.log('    ' + secondary(result));
 	};
 
 	addEmployee = async () => {
-		const roles = await query.getRoles();
+		const roles = await mysql.getRoles();
 		const mapRoleNames = (arr) => arr.map((val) => `${val.title}`);
 		const findRoleId = (arr, targetName) => arr.find((val) => val.title === targetName);
 		const roleNames = mapRoleNames(roles);
@@ -291,7 +291,7 @@ class EMS {
 			return;
 		}
 
-		const managers = await query.getEmployees();
+		const managers = await mysql.getEmployees();
 		const mapManagerNames = (arr) => arr.map((val) => `${val.first_name} ${val.last_name}`);
 		const findManagerId = (arr, targetName) => arr.find((val) => `${val.first_name} ${val.last_name}` === targetName);
 		const managerNames = mapManagerNames(managers);
@@ -306,7 +306,7 @@ class EMS {
 			managerId = findManagerId(managers, managerName).id;
 		}
 
-		const result = await query.addEmployee(firstName, lastName, roleId, managerId);
+		const result = await mysql.addEmployee(firstName, lastName, roleId, managerId);
 		console.log('    ' + secondary(result));
 	};
 }
