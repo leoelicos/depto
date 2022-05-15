@@ -1,5 +1,5 @@
-const Prompts = require('./Inquirer');
-const prompts = new Prompts();
+const Inquirer = require('./Inquirer');
+const inquirer = new Inquirer();
 
 const Mysql = require('./Mysql');
 const mysql = new Mysql();
@@ -46,7 +46,7 @@ class EMS {
 		this.run();
 	};
 
-	launchMenu = async () => await prompts.menu();
+	launchMenu = async () => await inquirer.menu();
 
 	quit = () => {
 		console.log(tertiary('Thank you for using Employee Management System.'));
@@ -84,7 +84,7 @@ class EMS {
 			return;
 		}
 
-		const { department_name: departmentName } = await prompts.viewEmployeesByDepartment(departmentNames);
+		const { department_name: departmentName } = await inquirer.viewEmployeesByDepartment(departmentNames);
 
 		const { id: department_id } = findDepartmentId(departments, departmentName);
 
@@ -104,7 +104,7 @@ class EMS {
 			return;
 		}
 
-		const { manager_name: managerName } = await prompts.viewEmployeesByManager(managerNames);
+		const { manager_name: managerName } = await inquirer.viewEmployeesByManager(managerNames);
 		const { id: managerId } = findManagerId(managers, managerName);
 
 		const employees = await mysql.getEmployeesByManager(managerId, managerName);
@@ -124,7 +124,7 @@ class EMS {
 			return;
 		}
 
-		const { department_name } = await prompts.viewTotalUtilizedBudgetByDepartment(departmentNames);
+		const { department_name } = await inquirer.viewTotalUtilizedBudgetByDepartment(departmentNames);
 
 		const { id: department_id } = findDepartmentId(departments, department_name);
 
@@ -145,7 +145,7 @@ class EMS {
 			return;
 		}
 
-		const { employee_name: employeeName } = await prompts.deleteEmployee(employeeNames);
+		const { employee_name: employeeName } = await inquirer.deleteEmployee(employeeNames);
 
 		const { id: employee_id } = findEmployeeId(employees, employeeName);
 
@@ -164,7 +164,7 @@ class EMS {
 			return;
 		}
 
-		const { role_name: roleName } = await prompts.deleteRole(roleNames);
+		const { role_name: roleName } = await inquirer.deleteRole(roleNames);
 
 		const { id: role_id } = findRoleId(roles, roleName);
 
@@ -183,7 +183,7 @@ class EMS {
 			return;
 		}
 
-		const { department_name: departmentName } = await prompts.deleteDepartment(departmentNames);
+		const { department_name: departmentName } = await inquirer.deleteDepartment(departmentNames);
 		const { id: department_id } = findDepartmentId(departments, departmentName);
 
 		const result = await mysql.deleteDepartment(department_id, departmentName);
@@ -212,7 +212,7 @@ class EMS {
 			return;
 		}
 
-		const { employee_name: employeeName, manager_name: managerName } = await prompts.updateEmployeeManager(employeeNames, managerNames);
+		const { employee_name: employeeName, manager_name: managerName } = await inquirer.updateEmployeeManager(employeeNames, managerNames);
 		const { id: employeeId } = findEmployeeId(employees, employeeName);
 		let managerId;
 		if (managerName === 'none') {
@@ -246,7 +246,7 @@ class EMS {
 			return;
 		}
 
-		const { employee_name: employeeName, role_name: roleName } = await prompts.updateEmployeeRole(employeeNames, roleNames);
+		const { employee_name: employeeName, role_name: roleName } = await inquirer.updateEmployeeRole(employeeNames, roleNames);
 
 		const { id: employeeId } = findEmployeeId(employees, employeeName);
 		const { id: roleId } = findRoleId(roles, roleName);
@@ -256,7 +256,7 @@ class EMS {
 	};
 
 	addDepartment = async () => {
-		const { name } = await prompts.addDepartment();
+		const { name } = await inquirer.addDepartment();
 		const result = await mysql.addDepartment(name);
 		console.log('   ' + secondary(result));
 	};
@@ -272,7 +272,7 @@ class EMS {
 			return;
 		}
 
-		const { title, salary, department_name } = await prompts.addRole(departmentNames);
+		const { title, salary, department_name } = await inquirer.addRole(departmentNames);
 
 		const { id: department_id } = findDepartmentId(departments, department_name);
 
@@ -296,7 +296,7 @@ class EMS {
 		const findManagerId = (arr, targetName) => arr.find((val) => `${val.first_name} ${val.last_name}` === targetName);
 		const managerNames = mapManagerNames(managers);
 
-		const { first_name: firstName, last_name: lastName, role_name: roleName, manager_name: managerName } = await prompts.addEmployee(roleNames, managerNames);
+		const { first_name: firstName, last_name: lastName, role_name: roleName, manager_name: managerName } = await inquirer.addEmployee(roleNames, managerNames);
 
 		const { id: roleId } = findRoleId(roles, roleName);
 		let managerId;
