@@ -1,3 +1,9 @@
+/* 
+ * Employee Management System
+ * schema.sql
+ * This file contains necessary SQL to create a new database
+ * Copyright 2022 Leo Wong
+ */
 DROP DATABASE IF EXISTS ems;
 CREATE DATABASE ems;
 
