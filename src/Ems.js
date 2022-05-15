@@ -49,50 +49,106 @@ class EMS {
 	launchMenu = async () => await inquirer.menu();
 
 	quit = () => {
+		// goodbye message
 		console.log(tertiary('Thank you for using Employee Management System.'));
+
+		//* sql disconnect
 		mysql.disconnectDatabase();
+
+		//* exit node application
 		process.exit();
 	};
+
+	// mysql > console
 	printDepartments = async () => {
-		const departments = await mysql.getDepartments();
+		try {
+			//* departments
+			const dObjects = await mysql.getDepartments();
 
-		console.log('\nTable: All Departments');
-		console.table(departments);
-	};
+			// log view title
+			console.log('\nTable: All Departments');
 
-	printRoles = async () => {
-		const roles = await mysql.getRoles();
+			// log view
+			console.table(dObjects);
 
-		console.log('\nTable: All Roles');
-		console.table(roles);
-	};
-
-	printEmployees = async () => {
-		const employees = await mysql.getEmployees();
-		console.log('\nTable: All employees');
-		console.table(employees);
-	};
-
-	printEmployeesByDepartment = async () => {
-		const departments = await mysql.getDepartments();
-		const mapDepartmentNames = (arr) => arr.map((val) => `${val.department}`);
-		const findDepartmentId = (arr, targetName) => arr.find((val) => val.department === targetName);
-		const departmentNames = mapDepartmentNames(departments);
-
-		if (departmentNames[0] === 'undefined') {
-			console.log('  ' + quaternary('There are no departments to choose'));
-			return;
+			// handle errors
+		} catch (err) {
+			console.error(err);
 		}
-
-		const { department_name: departmentName } = await inquirer.viewEmployeesByDepartment(departmentNames);
-
-		const { id: department_id } = findDepartmentId(departments, departmentName);
-
-		const employees = await mysql.getEmployeesByDepartment(department_id, departmentName);
-
-		console.log(`\nTable: Employees in ${departmentName}`);
-		console.table(employees);
 	};
+
+	// mysql > console
+	printRoles = async () => {
+		try {
+			//* sql roles
+			const rObjects = await mysql.getRoles();
+
+			// log view title
+			console.log('\nTable: All Roles');
+
+			// log view
+			console.table(rObjects);
+
+			// handle errors
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	// mysql > console
+	printEmployees = async () => {
+		try {
+			//* sql employees
+			const eObjects = await mysql.getEmployees();
+
+			// log view title
+			console.log('\nTable: All employees');
+
+			// log view
+			console.table(eObjects);
+
+			// handle errors
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	// mysql > inquirer > mysql > console
+	printEmployeesByDepartment = async () => {
+		try {
+			//* sql: departments
+			const dObjects = await mysql.getDepartments();
+
+			// map department names
+			const dNames = dObjects.map((d) => d.department);
+
+			//* inquirer: department name
+			const answer = await inquirer.viewEmployeesByDepartment(dNames);
+
+			// get department name from answer
+			const dName = answer.department_name;
+
+			// get department object with this name
+			const d = dObjects.find((d) => d.department === dName);
+
+			// get department id
+			const dId = d.id;
+
+			//* sql: employees
+			const eObjects = await mysql.getEmployeesByDepartment(dId, dName);
+
+			// log view title
+			console.log(`\nTable: Employees in ${dName}`);
+
+			// log view
+			console.table(eObjects);
+
+			// handle errors
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
 	printEmployeesByManager = async () => {
 		const mapManagerNames = (arr) => arr.map((val) => `${val.first_name} ${val.last_name}`);
 		const findManagerId = (arr, targetName) => arr.find((val) => `${val.first_name} ${val.last_name}` === targetName);
@@ -100,7 +156,7 @@ class EMS {
 		const managerNames = mapManagerNames(managers);
 
 		if (managerNames[0] === undefined) {
-			console.log('  ' + quaternary('There are no managers to choose'));
+			console.log('  ' + quaternary('There are no managers to choose.'));
 			return;
 		}
 
@@ -141,7 +197,7 @@ class EMS {
 		const employeeNames = mapEmployeeNames(employees);
 
 		if (employeeNames[0] === 'undefined undefined') {
-			console.log('  ' + quaternary('There are no employees to delete'));
+			console.log('  ' + quaternary('There are no employees to delete.'));
 			return;
 		}
 
@@ -160,7 +216,7 @@ class EMS {
 		const roleNames = mapRoleNames(roles);
 
 		if (roleNames[0] === 'undefined') {
-			console.log('  ' + quaternary('There are no roles to delete'));
+			console.log('  ' + quaternary('There are no roles to delete.'));
 			return;
 		}
 
@@ -179,7 +235,7 @@ class EMS {
 		const departmentNames = mapDepartmentNames(departments);
 
 		if (departmentNames[0] === 'undefined') {
-			console.log('  ' + quaternary('There are no departments to delete'));
+			console.log('  ' + quaternary('There are no departments to delete.'));
 			return;
 		}
 
@@ -198,7 +254,7 @@ class EMS {
 		const employeeNames = mapEmployeeNames(employees);
 
 		if (employeeNames[0] === 'undefined undefined') {
-			console.log('  ' + quaternary('There are no employees to update'));
+			console.log('  ' + quaternary('There are no employees to update.'));
 			return;
 		}
 
@@ -232,7 +288,7 @@ class EMS {
 		const employeeNames = mapEmployeeNames(employees);
 
 		if (employeeNames[0] === 'undefined undefined') {
-			console.log('  ' + quaternary('There are no employees to update'));
+			console.log('  ' + quaternary('There are no employees to update.'));
 			return;
 		}
 
@@ -242,7 +298,7 @@ class EMS {
 		const roleNames = mapRoleNames(roles);
 
 		if (roleNames[0] === 'undefined') {
-			console.log('  ' + quaternary('There are no roles to choose'));
+			console.log('  ' + quaternary('There are no roles to choose.'));
 			return;
 		}
 
@@ -268,7 +324,7 @@ class EMS {
 		const departmentNames = mapDepartmentNames(departments);
 
 		if (departmentNames[0] === 'undefined') {
-			console.log('  ' + quaternary('There are no departments to choose'));
+			console.log('  ' + quaternary('There are no departments to choose.'));
 			return;
 		}
 
