@@ -5,8 +5,34 @@
  * Copyright 2022 Leo Wong
  */
 
-const { inquireAddRole } = require('../Inquirer');
+// import inquirer to handle prompts
+const inquirer = require('inquirer');
 
+// utility function to create good-looking console logs
+const { primary, secondary } = require('../utils/chalkRender');
+
+// inquirer function to ask the user for the role's title and salary and choose the department
+const inquireAddRole = (departmentNames) =>
+	inquirer.prompt([
+		{
+			name: 'roleTitle',
+			type: 'input',
+			message: primary('Add role') + secondary(`What is the title of the role?`) + '\n > ',
+		},
+		{
+			name: 'roleSalary',
+			type: 'input',
+			message: primary('Add role') + secondary(`What is the salary of the role?`) + '\n > ',
+		},
+		{
+			name: 'departmentName',
+			type: 'list',
+			message: primary('Add role') + secondary('Which department does the role belong to?') + '\n > ',
+			choices: departmentNames,
+		},
+	]);
+
+// sql to query database
 const { sqlGetDepartments, sqlAddRole } = require('../mysql2');
 
 /*
