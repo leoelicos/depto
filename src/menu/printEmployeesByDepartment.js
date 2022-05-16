@@ -9,7 +9,7 @@
 const inquirer = require('inquirer');
 
 // utility function to create good-looking console logs
-const { primary, secondary } = require('../utils/chalkRender');
+const { primary, secondary, red, sqlParamsErr } = require('../utils/chalkRender');
 
 // inquirer function to ask the user to choose the department for which to print the employees
 const inquireViewEmployeesByDepartment = (departmentNames) =>
@@ -22,8 +22,24 @@ const inquireViewEmployeesByDepartment = (departmentNames) =>
 		},
 	]);
 
+// import connection
+const { db } = require('../../config/connection');
+
+const { sqlGetDepartments } = require('./printDepartments');
+
 // sql to query database
-const { sqlGetDepartments, sqlGetEmployeesByDepartment } = require('../mysql2');
+const sqlGetEmployeesByDepartment = (dId, dName) =>
+	new Promise(function (resolve, reject) {
+		const sql = `	SELECT e.id, e.first_name, e.last_name, title 
+								FROM employee AS e 
+								INNER JOIN role AS r 
+									ON e.role_id = r.id 
+								INNER JOIN department AS d
+									ON r.department_id = d.id
+								WHERE d.id = ?;`;
+		const params = dId;
+		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.length === 0 ? reject(red(`No employees found in department ${dName}`)) : resolve(result)));
+	});
 
 /*
  * Function to print the employees from a specific department from the database
@@ -31,7 +47,7 @@ const { sqlGetDepartments, sqlGetEmployeesByDepartment } = require('../mysql2');
  * inquirer	> ask the user to choose the department for which to print the employees
  * mysql 	> get the employees from that specific department from the database
  */
-printEmployeesByDepartment = async () => {
+const printEmployeesByDepartment = async () => {
 	try {
 		//* mysql 	> get the list of departments from the database
 		const dObjects = await sqlGetDepartments();
