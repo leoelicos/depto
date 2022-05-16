@@ -9,7 +9,7 @@
 const inquirer = require('inquirer');
 
 // utility function to create good-looking console logs
-const { primary, secondary } = require('../utils/chalkRender');
+const { primary, secondary, red, white, green, sqlParamsErr } = require('../utils/chalkRender');
 
 // inquirer function to ask the user to choose the employee and the manager
 const inquireUpdateEmployeeManager = (employeeNames, managerNames) =>
@@ -28,8 +28,20 @@ const inquireUpdateEmployeeManager = (employeeNames, managerNames) =>
 		},
 	]);
 
+// import connection
+const { db } = require('../../config/connection');
+
+const { sqlGetEmployees } = require('./printEmployees');
+
 // sql to query database
-const { sqlGetEmployees, sqlUpdateEmployeeManager } = require('../mysql2');
+const sqlUpdateEmployeeManager = (employee_id, manager_id, employeeName, managerName) =>
+	new Promise(function (resolve, reject) {
+		const sql = `	UPDATE employee
+							SET manager_id = ?
+							WHERE id = ?`;
+		const params = [manager_id, employee_id];
+		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.affectedRows === 0 ? reject(red(`Unable to find either employee ${employeeName} or manager ${managerName}`)) : result.changedRows === 0 ? reject(white(`No changes were made`)) : resolve(green(`Updated ${employeeName}'s manager to ${managerName}`))));
+	});
 
 /*
  * Function to update an employee's manager in the database
@@ -38,7 +50,7 @@ const { sqlGetEmployees, sqlUpdateEmployeeManager } = require('../mysql2');
  * inquirer	> ask the user to choose the employee and the manager
  * mysql 	> update the employee's manager in the database
  */
-updateEmployeeManager = async () => {
+const updateEmployeeManager = async () => {
 	try {
 		//* mysql 	> get the list of employees from the database
 		const eObjects = await sqlGetEmployees();
