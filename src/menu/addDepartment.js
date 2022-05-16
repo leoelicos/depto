@@ -1,12 +1,27 @@
 /*
  * Employee Management System
  * addDepartment.js
- * this file contains a function that can
+ * this file contains a function that can add a department to the database
  * Copyright 2022 Leo Wong
  */
 
-const { inquireAddDepartment } = require('../Inquirer');
+// import inquirer to handle prompts
+const inquirer = require('inquirer');
 
+// utility function to create good-looking console logs
+const { primary, secondary } = require('../utils/chalkRender');
+
+// inquirer function to ask user for the department's name
+const inquireAddDepartment = () =>
+	inquirer.prompt([
+		{
+			name: 'departmentName',
+			type: 'input',
+			message: primary('Add department') + secondary(`What is the name of the department?` + '\n > '),
+		},
+	]);
+
+// sql to query database
 const { sqlAddDepartment } = require('../mysql2');
 
 /*
