@@ -5,8 +5,24 @@
  * Copyright 2022 Leo Wong
  */
 
-const { inquireDeleteDepartment } = require('../Inquirer');
+// import inquirer to handle prompts
+const inquirer = require('inquirer');
 
+// utility function to create good-looking console logs
+const { primary, secondary } = require('../utils/chalkRender');
+
+// inquirer function to ask the user to choose the department to delete
+const inquireDeleteDepartment = (departmentNames) =>
+	inquirer.prompt([
+		{
+			name: 'departmentName',
+			type: 'list',
+			message: primary('Delete department') + secondary('Which department do you want to delete?') + '\n > ',
+			choices: departmentNames,
+		},
+	]);
+
+// sql to query database
 const { sqlGetDepartments, sqlDeleteDepartment } = require('../mysql2');
 
 /*
