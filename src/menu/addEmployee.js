@@ -9,7 +9,7 @@
 const inquirer = require('inquirer');
 
 // utility function to create good-looking console logs
-const { red } = require('../utils/chalkRender');
+const { primary, secondary, red, green, sqlParamsErr } = require('../utils/chalkRender');
 
 // inquirer function to ask user for the employee's name, and choose the role and the manager
 const inquireAddEmployee = (roleTitles, managerNames) =>
@@ -38,8 +38,20 @@ const inquireAddEmployee = (roleTitles, managerNames) =>
 		},
 	]);
 
+// import connection
+const { db } = require('../../config/connection');
+
+const { sqlGetEmployees } = require('./printEmployees');
+const { sqlGetRoles } = require('./printRoles');
+
 // sql to query database
-const { sqlAddEmployee, sqlGetEmployees, sqlGetRoles } = require('../mysql2');
+const sqlAddEmployee = (first_name, last_name, role_id, manager_id) =>
+	new Promise(function (resolve, reject) {
+		const sql = ` 	INSERT INTO employee (first_name, last_name, role_id, manager_id)
+								VALUES (?, ?, ?, ?);`;
+		const params = [first_name, last_name, role_id, manager_id];
+		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.affectedRows === 0 ? reject(red(`Unable to add employee ${first_name} ${last_name}`)) : resolve(green(`Added ${first_name} ${last_name} to the database`))));
+	});
 
 /*
  * Function to add an employee to the database
@@ -48,7 +60,7 @@ const { sqlAddEmployee, sqlGetEmployees, sqlGetRoles } = require('../mysql2');
  * inquirer > ask the user for the employee's name, and choose the role and the manager
  * mysql 	> add the employee to the database
  */
-addEmployee = async () => {
+const addEmployee = async () => {
 	try {
 		//* mysql		> get the list of roles from the database
 		const rObjects = await sqlGetRoles();
