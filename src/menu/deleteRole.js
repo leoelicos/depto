@@ -9,7 +9,7 @@
 const inquirer = require('inquirer');
 
 // utility function to create good-looking console logs
-const { primary, secondary } = require('../utils/chalkRender');
+const { primary, secondary, red, green, sqlParamsErr } = require('../utils/chalkRender');
 
 // inquirer function to ask the user to choose the role to delete
 const inquireDeleteRole = (roleTitles) =>
@@ -22,8 +22,19 @@ const inquireDeleteRole = (roleTitles) =>
 		},
 	]);
 
+// import connection
+const { db } = require('../../config/connection');
+
+const { sqlGetRoles } = require('./printRoles');
+
 // sql to query database
-const { sqlGetRoles, sqlDeleteRole } = require('../mysql2');
+const sqlDeleteRole = (role_id, roleName) =>
+	new Promise(function (resolve, reject) {
+		const sql = `	DELETE FROM role
+							WHERE id = ?`;
+		const params = role_id;
+		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.affectedRows === 0 ? reject(red(`Unable to find role ${roleName}`)) : resolve(green(`Deleted ${roleName} from roles`))));
+	});
 
 /*
  * Function to delete a role from the database
@@ -31,7 +42,7 @@ const { sqlGetRoles, sqlDeleteRole } = require('../mysql2');
  * inquirer	> ask the user to choose the role to delete
  * mysql 	> delete the role from the database
  */
-deleteRole = async () => {
+const deleteRole = async () => {
 	try {
 		//* mysql 	> get the list of roles from the database
 		const rObjects = await sqlGetRoles();
