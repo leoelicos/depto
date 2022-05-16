@@ -5,11 +5,41 @@
  * Copyright 2022 Leo Wong
  */
 
-const { inquireAddEmployee } = require('../Inquirer');
+// import inquirer to handle prompts
+const inquirer = require('inquirer');
 
-const { sqlAddEmployee, sqlGetEmployees, sqlGetRoles } = require('../mysql2');
-
+// utility function to create good-looking console logs
 const { red } = require('../utils/chalkRender');
+
+// inquirer function to ask user for the employee's name, and choose the role and the manager
+const inquireAddEmployee = (roleTitles, managerNames) =>
+	inquirer.prompt([
+		{
+			name: 'firstName',
+			type: 'input',
+			message: primary('Add employee') + secondary(`What is the employee's first name?`) + '\n > ',
+		},
+		{
+			name: 'lastName',
+			type: 'input',
+			message: primary('Add employee') + secondary(`What is the employee's last name?`) + '\n > ',
+		},
+		{
+			name: 'roleTitle',
+			type: 'list',
+			message: primary('Add employee') + secondary("What is the employee's role?") + '\n > ',
+			choices: roleTitles,
+		},
+		{
+			name: 'managerName',
+			type: 'list',
+			message: primary('Add employee') + secondary("Who is the employee's manager?") + '\n > ',
+			choices: managerNames.length === 0 ? ['none'] : [...managerNames, 'none'],
+		},
+	]);
+
+// sql to query database
+const { sqlAddEmployee, sqlGetEmployees, sqlGetRoles } = require('../mysql2');
 
 /*
  * Function to add an employee to the database
