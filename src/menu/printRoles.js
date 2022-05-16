@@ -5,15 +5,28 @@
  * Copyright 2022 Leo Wong
  */
 
+// utility function to create good-looking console logs
+const { red, sqlErr } = require('../utils/chalkRender');
+
+// import connection
+const { db } = require('../../config/connection');
+
 // sql to query database
-const { sqlGetRoles } = require('../mysql2');
+const sqlGetRoles = () =>
+	new Promise(function (resolve, reject) {
+		const sql = `	SELECT r.id, r.title, d.name AS department, r.salary
+								FROM role AS r
+								INNER JOIN department AS d
+									ON r.department_id = d.id;`;
+		db.query(sql, (err, result) => (err ? reject(sqlErr(sql, err)) : result.length === 0 ? reject(red('No roles found')) : resolve(result)));
+	});
 
 /*
  * Function to print all roles from the database
  * mysql 	> get the list of roles from the database
  */
 
-printRoles = async () => {
+const printRoles = async () => {
 	try {
 		//* mysql 	> get the list of roles from the database
 		const rObjects = await sqlGetRoles();
@@ -30,4 +43,4 @@ printRoles = async () => {
 	}
 };
 
-module.exports = { printRoles };
+module.exports = { printRoles, sqlGetRoles };
