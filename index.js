@@ -1,7 +1,7 @@
 /*
  * Employee Management System
  * index.js
- * this file contains Menu class that prompts the user for menu actions
+ * this file runs the system by repeatedly prompting the user for menu actions
  * Copyright 2022 Leo Wong
  */
 
