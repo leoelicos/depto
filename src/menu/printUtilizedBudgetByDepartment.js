@@ -9,7 +9,7 @@
 const inquirer = require('inquirer');
 
 // utility function to create good-looking console logs
-const { primary, secondary } = require('../utils/chalkRender');
+const { primary, secondary, red, sqlParamsErr } = require('../utils/chalkRender');
 
 // inquirer function to ask the user to choose the department for which to print the budget
 const inquireViewTotalUtilizedBudgetByDepartment = async (departmentNames) =>
@@ -22,16 +22,31 @@ const inquireViewTotalUtilizedBudgetByDepartment = async (departmentNames) =>
 		},
 	]);
 
-// sql to query database
-const { sqlGetDepartments, sqlGetTotalUtilizedBudget } = require('../mysql2');
+// import connection
+const { db } = require('../../config/connection');
 
+// sql to query database
+const { sqlGetDepartments } = require('./printDepartments');
+
+const sqlGetTotalUtilizedBudget = (dId, dName) =>
+	new Promise(function (resolve, reject) {
+		const sql = ` 	SELECT d.name AS 'department', SUM(salary) AS 'total utilized budget'            
+							FROM employee AS e
+							INNER JOIN role AS r
+								ON e.role_id = r.id
+							INNER JOIN department AS d
+								ON r.department_id = d.id
+							WHERE r.department_id = ?;`;
+		const params = dId;
+		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result[0].department === null ? reject(red(`No budget found for department ${dName}`)) : resolve(result)));
+	});
 /*
  * Function to print the total utilized budget by department from the database
  * mysql 	> get the list of departments from the database
  * inquirer	> ask the user to choose the department for which to print the budget
  * mysql 	> get the budget from the database
  */
-printUtilizedBudgetByDepartment = async () => {
+const printUtilizedBudgetByDepartment = async () => {
 	try {
 		//* mysql 	> get the list of departments from the database
 		const dObjects = await sqlGetDepartments();
