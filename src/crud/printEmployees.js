@@ -22,7 +22,8 @@ const sqlGetEmployees = () =>
 				INNER JOIN department AS d
 				ON r.department_id = d.id
 				LEFT JOIN employee AS e2
-				ON e.manager_id = e2.id;`;
+				ON e.manager_id = e2.id
+				ORDER BY e.id;`;
 		db.query(sql, (err, result) => (err ? reject(sqlErr(sql, err)) : result.length === 0 ? reject(red('No employees found')) : resolve(result)));
 	});
 /*
