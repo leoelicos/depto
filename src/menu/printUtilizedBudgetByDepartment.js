@@ -5,8 +5,24 @@
  * Copyright 2022 Leo Wong
  */
 
-const { inquireViewTotalUtilizedBudgetByDepartment } = require('../Inquirer');
+// import inquirer to handle prompts
+const inquirer = require('inquirer');
 
+// utility function to create good-looking console logs
+const { primary, secondary } = require('../utils/chalkRender');
+
+// inquirer function to ask the user to choose the department for which to print the budget
+const inquireViewTotalUtilizedBudgetByDepartment = async (departmentNames) =>
+	inquirer.prompt([
+		{
+			name: 'departmentName',
+			type: 'list',
+			message: primary('View budget') + secondary("Which department's total utilized budget do you want to view?" + '\n > '),
+			choices: departmentNames,
+		},
+	]);
+
+// sql to query database
 const { sqlGetDepartments, sqlGetTotalUtilizedBudget } = require('../mysql2');
 
 /*

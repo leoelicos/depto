@@ -5,8 +5,24 @@
  * Copyright 2022 Leo Wong
  */
 
-const { inquireViewEmployeesByDepartment } = require('../Inquirer');
+// import inquirer to handle prompts
+const inquirer = require('inquirer');
 
+// utility function to create good-looking console logs
+const { primary, secondary } = require('../utils/chalkRender');
+
+// inquirer function to ask the user to choose the department for which to print the employees
+const inquireViewEmployeesByDepartment = (departmentNames) =>
+	inquirer.prompt([
+		{
+			name: 'departmentName',
+			type: 'list',
+			message: primary('View employees') + secondary("Which department's employees do you want to view?" + '\n > '),
+			choices: departmentNames,
+		},
+	]);
+
+// sql to query database
 const { sqlGetDepartments, sqlGetEmployeesByDepartment } = require('../mysql2');
 
 /*

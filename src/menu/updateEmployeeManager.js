@@ -5,8 +5,30 @@
  * Copyright 2022 Leo Wong
  */
 
-const { inquireUpdateEmployeeManager } = require('../Inquirer');
+// import inquirer to handle prompts
+const inquirer = require('inquirer');
 
+// utility function to create good-looking console logs
+const { primary, secondary } = require('../utils/chalkRender');
+
+// inquirer function to ask the user to choose the employee and the manager
+const inquireUpdateEmployeeManager = (employeeNames, managerNames) =>
+	inquirer.prompt([
+		{
+			name: 'employeeName',
+			type: 'list',
+			message: primary('Update employee') + secondary("Which employee's manager do you want to update?") + '\n > ',
+			choices: employeeNames,
+		},
+		{
+			name: 'managerName',
+			type: 'list',
+			message: primary('Update employee') + secondary('Which manager do you want to assign the selected employee?') + '\n > ',
+			choices: [...managerNames, 'none'],
+		},
+	]);
+
+// sql to query database
 const { sqlGetEmployees, sqlUpdateEmployeeManager } = require('../mysql2');
 
 /*

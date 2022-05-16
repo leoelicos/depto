@@ -5,8 +5,24 @@
  * Copyright 2022 Leo Wong
  */
 
-const { inquireDeleteEmployee } = require('../Inquirer');
+// import inquirer to handle prompts
+const inquirer = require('inquirer');
 
+// utility function to create good-looking console logs
+const { primary, secondary } = require('../utils/chalkRender');
+
+// inquirer function to ask the user to choose the employee to delete
+const inquireDeleteEmployee = (employeeNames) =>
+	inquirer.prompt([
+		{
+			name: 'employeeName',
+			type: 'list',
+			message: primary('Delete employee') + secondary('Which employee do you want to delete?') + '\n > ',
+			choices: employeeNames,
+		},
+	]);
+
+// sql to query database
 const { sqlGetEmployees, sqlDeleteEmployee } = require('../mysql2');
 
 /*

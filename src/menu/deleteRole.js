@@ -5,8 +5,24 @@
  * Copyright 2022 Leo Wong
  */
 
-const { inquireDeleteRole } = require('../Inquirer');
+// import inquirer to handle prompts
+const inquirer = require('inquirer');
 
+// utility function to create good-looking console logs
+const { primary, secondary } = require('../utils/chalkRender');
+
+// inquirer function to ask the user to choose the role to delete
+const inquireDeleteRole = (roleTitles) =>
+	inquirer.prompt([
+		{
+			name: 'title',
+			type: 'list',
+			message: primary('Delete role') + secondary('Which role do you want to delete?') + '\n > ',
+			choices: roleTitles,
+		},
+	]);
+
+// sql to query database
 const { sqlGetRoles, sqlDeleteRole } = require('../mysql2');
 
 /*
