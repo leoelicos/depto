@@ -9,7 +9,7 @@
 const inquirer = require('inquirer');
 
 // utility function to create good-looking console logs
-const { primary, secondary } = require('../utils/chalkRender');
+const { primary, secondary, red, green, sqlParamsErr } = require('../utils/chalkRender');
 
 // inquirer function to ask the user for the role's title and salary and choose the department
 const inquireAddRole = (departmentNames) =>
@@ -32,8 +32,19 @@ const inquireAddRole = (departmentNames) =>
 		},
 	]);
 
+// import connection
+const { db } = require('../../config/connection');
+
+const { sqlGetDepartments } = require('./printDepartments');
+
 // sql to query database
-const { sqlGetDepartments, sqlAddRole } = require('../mysql2');
+const sqlAddRole = (roleTitle, roleSalary, departmentId) =>
+	new Promise(function (resolve, reject) {
+		const sql = `	INSERT INTO role (title, salary, department_id)
+								VALUES (?, ?, ?);`;
+		const params = [roleTitle, roleSalary, departmentId];
+		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.affectedRows === 0 ? reject(red(`Unable to add role ${roleTitle}`)) : resolve(green(`Added ${roleTitle} to the database`))));
+	});
 
 /*
  * Function to add a role to the database
@@ -42,7 +53,7 @@ const { sqlGetDepartments, sqlAddRole } = require('../mysql2');
  * mysql 	> add the role to the database
  */
 
-addRole = async () => {
+const addRole = async () => {
 	try {
 		//* mysql		> get the list of departments from the database
 		const dObjects = await sqlGetDepartments();
