@@ -5,17 +5,33 @@
  * Copyright 2022 Leo Wong
  */
 
-// import function that asks user which menu action they would like
-const { inquireMenu } = require('./src/Inquirer');
+//* import inquirer to handle prompts
+const inquirer = require('inquirer');
 
-// import CRUD scripts that implement each menu action
+// utility function to create good-looking console logs
+const { primary, secondary } = require('./src/utils/chalkRender');
 
-//* create
+//* inquirer function that asks user which menu action they would like
+const inquireMenu = () =>
+	inquirer.prompt([
+		{
+			name: 'menu',
+			type: 'list',
+			prefix: ' ' + primary('Menu'.padEnd(120)) + '\n',
+			message: secondary('What would you like to do?'.padEnd(120)) + '\n > ',
+			choices: ['View All Departments', 'View All Roles', 'View All Employees', 'View Employees by Department', 'View Employees by Manager', 'View Total Utilized Budget by Department', 'Add Department', 'Add Role', 'Add Employee', 'Update Employee Role', 'Update Employee Manager', 'Delete Department', 'Delete Role', 'Delete Employee', 'Quit'],
+			pageSize: 5,
+		},
+	]);
+
+// CRUD
+
+//* import create scripts
 const { addDepartment } = require('./src/menu/addDepartment.js');
 const { addEmployee } = require('./src/menu/addEmployee.js');
 const { addRole } = require('./src/menu/addRole.js');
 
-//* read
+//* import read scripts
 const { printDepartments } = require('./src/menu/printDepartments.js');
 const { printEmployees } = require('./src/menu/printEmployees.js');
 const { printEmployeesByDepartment } = require('./src/menu/printEmployeesByDepartment.js');
@@ -23,46 +39,23 @@ const { printEmployeesByManager } = require('./src/menu/printEmployeesByManager.
 const { printRoles } = require('./src/menu/printRoles.js');
 const { printUtilizedBudgetByDepartment } = require('./src/menu/printUtilizedBudgetByDepartment.js');
 
-//* update
+//* import update scripts
 const { updateEmployeeManager } = require('./src/menu/updateEmployeeManager.js');
 const { updateEmployeeRole } = require('./src/menu/updateEmployeeRole.js');
 
-//* delete
+//* import delete scripts
 const { deleteDepartment } = require('./src/menu/deleteDepartment.js');
 const { deleteEmployee } = require('./src/menu/deleteEmployee.js');
 const { deleteRole } = require('./src/menu/deleteRole.js');
 
-// import disconnect function
+//* import disconnect function
 const { disconnect } = require('./config/connection');
 
-// import utility function to render user messages
+//* import utility function to render user messages
 const { logoHelper } = require('./src/utils/chalkRender');
 
-// start the application
-init();
-
-// function to start the application
-async function init() {
-	//
-	// welcome message
-	logoHelper('', ' ');
-	logoHelper('', '*');
-	logoHelper(' EMPLOYEE MANAGEMENT SYSTEM ', ' ');
-	logoHelper('', '*');
-	logoHelper('', ' ');
-
-	// start the menu and wait for it to finish
-	await ems();
-
-	// disconnect from server
-	await disconnect();
-
-	// goodbye message
-	logoHelper('Thank you for using Employee Management System.');
-}
-
 // Function to prompt the user for actions
-async function ems() {
+const ems = async () => {
 	// prompt user for menu option
 	let { menu } = await inquireMenu();
 	// base case
@@ -98,4 +91,27 @@ async function ems() {
 		await deleteEmployee();
 	}
 	await ems();
-}
+};
+
+// function to start the application
+const init = async () => {
+	//
+	// welcome message
+	logoHelper('', ' ');
+	logoHelper('', '*');
+	logoHelper(' EMPLOYEE MANAGEMENT SYSTEM ', ' ');
+	logoHelper('', '*');
+	logoHelper('', ' ');
+
+	// start the menu and wait for it to finish
+	await ems();
+
+	// disconnect from server
+	await disconnect();
+
+	// goodbye message
+	logoHelper('Thank you for using Employee Management System.');
+};
+
+// start the application
+init();
