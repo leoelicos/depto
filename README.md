@@ -38,9 +38,9 @@ https://user-images.githubusercontent.com/99461390/168465029-867e7224-30ab-4c93-
 
 -  Video demo is also on YouTube: (https://www.youtube.com/watch?v=W58SFkcsXkM)
 
-### Use the up and down keys to navigate menu
+### Navigate menu items with <kbd>Up ↑</kbd> and <kbd>Down ↓</kbd>
 
-### Press the enter key to select menu items
+### Select menu items with <kbd>Enter ↵</kbd>
 
 | Menu                                     | What it does                                      |
 | ---------------------------------------- | ------------------------------------------------- |
