@@ -5,8 +5,24 @@
  * Copyright 2022 Leo Wong
  */
 
-const { inquireViewEmployeesByManager } = require('../Inquirer');
+// import inquirer to handle prompts
+const inquirer = require('inquirer');
 
+// utility function to create good-looking console logs
+const { primary, secondary } = require('../utils/chalkRender');
+
+// inquirer function to ask the user to choose the manager for which to print the employees
+const inquireViewEmployeesByManager = (managerNames) =>
+	inquirer.prompt([
+		{
+			name: 'managerName',
+			type: 'list',
+			message: primary('View employees') + secondary("Which manager's employees do you want to view?" + '\n > '),
+			choices: managerNames,
+		},
+	]);
+
+// sql to query database
 const { sqlGetManagers, sqlGetEmployeesByManager } = require('../mysql2');
 
 /*
