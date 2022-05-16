@@ -9,7 +9,7 @@
 const inquirer = require('inquirer');
 
 // utility function to create good-looking console logs
-const { primary, secondary } = require('../utils/chalkRender');
+const { primary, secondary, red, green, sqlParamsErr } = require('../utils/chalkRender');
 
 // inquirer function to ask the user to choose the employee to delete
 const inquireDeleteEmployee = (employeeNames) =>
@@ -22,8 +22,19 @@ const inquireDeleteEmployee = (employeeNames) =>
 		},
 	]);
 
+// import connection
+const { db } = require('../../config/connection');
+
+const { sqlGetEmployees } = require('./printEmployees');
+
 // sql to query database
-const { sqlGetEmployees, sqlDeleteEmployee } = require('../mysql2');
+const sqlDeleteEmployee = (employee_id, employeeName) =>
+	new Promise(function (resolve, reject) {
+		const sql = `	DELETE FROM employee 
+							 	WHERE id = ?`;
+		const params = employee_id;
+		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.affectedRows === 0 ? reject(red(`Unable to find employee ${employeeName}`)) : resolve(green(`Deleted ${employeeName} from employees`))));
+	});
 
 /*
  * Function to delete an employee from the database
@@ -31,7 +42,7 @@ const { sqlGetEmployees, sqlDeleteEmployee } = require('../mysql2');
  * inquirer	> ask the user to choose the employee to delete
  * mysql 	> delete the employee from the database
  */
-deleteEmployee = async () => {
+const deleteEmployee = async () => {
 	try {
 		//* mysql 	> get the list of employees from the database
 		const eObjects = await sqlGetEmployees();
