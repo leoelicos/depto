@@ -27,26 +27,26 @@ const inquireMenu = () =>
 // CRUD
 
 //* import create scripts
-const { addDepartment } = require('./src/menu/addDepartment.js');
-const { addEmployee } = require('./src/menu/addEmployee.js');
-const { addRole } = require('./src/menu/addRole.js');
+const { addDepartment } = require('./src/crud/addDepartment.js');
+const { addEmployee } = require('./src/crud/addEmployee.js.js');
+const { addRole } = require('./src/crud/addRole.js.js');
 
 //* import read scripts
-const { printDepartments } = require('./src/menu/printDepartments.js');
-const { printEmployees } = require('./src/menu/printEmployees.js');
-const { printEmployeesByDepartment } = require('./src/menu/printEmployeesByDepartment.js');
-const { printEmployeesByManager } = require('./src/menu/printEmployeesByManager.js');
-const { printRoles } = require('./src/menu/printRoles.js');
-const { printUtilizedBudgetByDepartment } = require('./src/menu/printUtilizedBudgetByDepartment.js');
+const { printDepartments } = require('./src/crud/printDepartments.js.js');
+const { printEmployees } = require('./src/crud/printEmployees.js');
+const { printEmployeesByDepartment } = require('./src/crud/printEmployeesByDepartment.js.js');
+const { printEmployeesByManager } = require('./src/crud/printEmployeesByManager.js.js');
+const { printRoles } = require('./src/crud/printRoles.js.js');
+const { printUtilizedBudgetByDepartment } = require('./src/crud/printUtilizedBudgetByDepartment.js');
 
 //* import update scripts
-const { updateEmployeeManager } = require('./src/menu/updateEmployeeManager.js');
-const { updateEmployeeRole } = require('./src/menu/updateEmployeeRole.js');
+const { updateEmployeeManager } = require('./src/crud/updateEmployeeManager.js');
+const { updateEmployeeRole } = require('./src/crud/updateEmployeeRole.js');
 
 //* import delete scripts
-const { deleteDepartment } = require('./src/menu/deleteDepartment.js');
-const { deleteEmployee } = require('./src/menu/deleteEmployee.js');
-const { deleteRole } = require('./src/menu/deleteRole.js');
+const { deleteDepartment } = require('./src/crud/deleteDepartment.js');
+const { deleteEmployee } = require('./src/crud/deleteEmployee.js');
+const { deleteRole } = require('./src/crud/deleteRole.js');
 
 //* import disconnect function
 const { disconnect } = require('./config/connection');
