@@ -5,8 +5,30 @@
  * Copyright 2022 Leo Wong
  */
 
-const { inquireUpdateEmployeeRole } = require('../Inquirer');
+// import inquirer to handle prompts
+const inquirer = require('inquirer');
 
+// utility function to create good-looking console logs
+const { primary, secondary } = require('../utils/chalkRender');
+
+// inquirer function to ask the user to choose the employee and the role
+const inquireUpdateEmployeeRole = (employeeNames, roleTitles) =>
+	inquirer.prompt([
+		{
+			name: 'employeeName',
+			type: 'list',
+			message: primary('Update employee') + secondary("Which employee's role do you want to update?") + '\n > ',
+			choices: employeeNames,
+		},
+		{
+			name: 'roleTitle',
+			type: 'list',
+			message: primary('Update employee') + secondary('Which role do you want to assign the selected employee?') + '\n > ',
+			choices: roleTitles,
+		},
+	]);
+
+// sql to query database
 const { sqlGetEmployees, sqlGetRoles, sqlUpdateEmployeeRole } = require('../mysql2');
 
 /*
