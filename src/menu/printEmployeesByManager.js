@@ -9,7 +9,7 @@
 const inquirer = require('inquirer');
 
 // utility function to create good-looking console logs
-const { primary, secondary } = require('../utils/chalkRender');
+const { primary, secondary, red, sqlErr, sqlParamsErr } = require('../utils/chalkRender');
 
 // inquirer function to ask the user to choose the manager for which to print the employees
 const inquireViewEmployeesByManager = (managerNames) =>
@@ -22,8 +22,45 @@ const inquireViewEmployeesByManager = (managerNames) =>
 		},
 	]);
 
+// import connection
+const { db } = require('../../config/connection');
+
 // sql to query database
-const { sqlGetManagers, sqlGetEmployeesByManager } = require('../mysql2');
+const sqlGetManagers = () =>
+	new Promise(function (resolve, reject) {
+		const sql = ` 	SELECT e.id,  e.first_name, e.last_name, title, name AS department, salary, 
+									CONCAT(e2.first_name,' ',e2.last_name) AS manager 		     
+								FROM employee AS e
+								INNER JOIN role AS r
+									ON e.role_id = r.id
+								INNER JOIN department AS d
+									ON r.department_id = d.id
+								LEFT JOIN employee AS e2
+									ON e.manager_id = e2.id
+								WHERE e.id IN (
+									SELECT e.manager_id		     
+									FROM employee AS e
+									LEFT JOIN employee AS e2
+										ON e.manager_id = e2.id
+								);`;
+		db.query(sql, (err, result) => (err ? reject(sqlErr(sql, err)) : result.length === 0 ? reject(red('No managers found')) : resolve(result)));
+	});
+
+// sql to query database
+const sqlGetEmployeesByManager = (mId, mName) =>
+	new Promise(function (resolve, reject) {
+		const sql = ` 	SELECT e.id, e.first_name, e.last_name, title 
+								FROM employee AS e 
+								INNER JOIN role AS r 
+									ON e.role_id = r.id 
+								INNER JOIN department AS d
+									ON r.department_id = d.id
+								LEFT JOIN employee AS e2
+									ON e.manager_id = e2.id
+								WHERE e.manager_id = ?;`;
+		const params = mId;
+		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.length === 0 ? reject(red(`No employees found with manager ${mName}`)) : resolve(result)));
+	});
 
 /*
  * Function to print the employees with a specific manager from the database
@@ -31,7 +68,7 @@ const { sqlGetManagers, sqlGetEmployeesByManager } = require('../mysql2');
  * inquirer	> ask the user to choose the manager for which to print the employees
  * mysql 	> get the employees with that specific manager from the database
  */
-printEmployeesByManager = async () => {
+const printEmployeesByManager = async () => {
 	try {
 		//* mysql 	> get the list of managers from the database
 		const mObjects = await sqlGetManagers();
