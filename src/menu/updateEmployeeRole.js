@@ -9,7 +9,7 @@
 const inquirer = require('inquirer');
 
 // utility function to create good-looking console logs
-const { primary, secondary } = require('../utils/chalkRender');
+const { primary, secondary, red, white, green, sqlParamsErr } = require('../utils/chalkRender');
 
 // inquirer function to ask the user to choose the employee and the role
 const inquireUpdateEmployeeRole = (employeeNames, roleTitles) =>
@@ -28,8 +28,21 @@ const inquireUpdateEmployeeRole = (employeeNames, roleTitles) =>
 		},
 	]);
 
+// import connection
+const { db } = require('../../config/connection');
+
+const { sqlGetEmployees } = require('./printEmployees');
+const { sqlGetRoles } = require('./printRoles');
+
 // sql to query database
-const { sqlGetEmployees, sqlGetRoles, sqlUpdateEmployeeRole } = require('../mysql2');
+const sqlUpdateEmployeeRole = (employee_id, role_id, employeeName, roleName) =>
+	new Promise(function (resolve, reject) {
+		const sql = ` 	UPDATE employee 
+							SET role_id = ? 
+							WHERE id = ?`;
+		const params = [role_id, employee_id];
+		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.affectedRows === 0 ? reject(red(`Unable to find employee ${employee_id} or role ${role_id}`)) : result.changedRows === 0 ? resolve(white(`No changes were made`)) : resolve(green(`Updated ${employeeName}'s role to ${roleName}`))));
+	});
 
 /*
  * Function to update an employee's role in the database
