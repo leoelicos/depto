@@ -9,7 +9,7 @@
 const inquirer = require('inquirer');
 
 // utility function to create good-looking console logs
-const { primary, secondary } = require('../utils/chalkRender');
+const { primary, secondary, red, green, sqlParamsErr } = require('../utils/chalkRender');
 
 // inquirer function to ask the user to choose the department to delete
 const inquireDeleteDepartment = (departmentNames) =>
@@ -22,8 +22,19 @@ const inquireDeleteDepartment = (departmentNames) =>
 		},
 	]);
 
+// import connection
+const { db } = require('../../config/connection');
+
+const { sqlGetDepartments } = require('./printDepartments');
+
 // sql to query database
-const { sqlGetDepartments, sqlDeleteDepartment } = require('../mysql2');
+const sqlDeleteDepartment = (department_id, departmentName) =>
+	new Promise(function (resolve, reject) {
+		const sql = `	DELETE FROM department 
+								WHERE id = ?`;
+		const params = department_id;
+		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.affectedRows === 0 ? reject(red(`Unable to find department ${departmentName}`)) : resolve(green(`Deleted ${departmentName} from departments`))));
+	});
 
 /*
  * Function to delete a department from the database
@@ -32,7 +43,7 @@ const { sqlGetDepartments, sqlDeleteDepartment } = require('../mysql2');
  * mysql 	> delete the department from the database
  */
 
-deleteDepartment = async () => {
+const deleteDepartment = async () => {
 	try {
 		//* mysql 	> get the list of departments from the database
 		const dObjects = await sqlGetDepartments();
