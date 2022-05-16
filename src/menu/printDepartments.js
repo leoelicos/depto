@@ -5,6 +5,7 @@
  * Copyright 2022 Leo Wong
  */
 
+// sql to query database
 const { sqlGetDepartments } = require('../mysql2');
 
 /*
