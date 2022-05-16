@@ -31,7 +31,7 @@ const { sqlGetDepartments } = require('./printDepartments');
 const sqlDeleteDepartment = (department_id, departmentName) =>
 	new Promise(function (resolve, reject) {
 		const sql = `	DELETE FROM department 
-								WHERE id = ?`;
+				WHERE id = ?`;
 		const params = department_id;
 		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.affectedRows === 0 ? reject(red(`Unable to find department ${departmentName}`)) : resolve(green(`Deleted ${departmentName} from departments`))));
 	});

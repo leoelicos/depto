@@ -31,7 +31,7 @@ const { sqlGetRoles } = require('./printRoles');
 const sqlDeleteRole = (role_id, roleName) =>
 	new Promise(function (resolve, reject) {
 		const sql = `	DELETE FROM role
-							WHERE id = ?`;
+				WHERE id = ?`;
 		const params = role_id;
 		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.affectedRows === 0 ? reject(red(`Unable to find role ${roleName}`)) : resolve(green(`Deleted ${roleName} from roles`))));
 	});

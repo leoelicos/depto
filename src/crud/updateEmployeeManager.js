@@ -37,8 +37,8 @@ const { sqlGetEmployees } = require('./printEmployees');
 const sqlUpdateEmployeeManager = (employee_id, manager_id, employeeName, managerName) =>
 	new Promise(function (resolve, reject) {
 		const sql = `	UPDATE employee
-							SET manager_id = ?
-							WHERE id = ?`;
+				SET manager_id = ?
+				WHERE id = ?`;
 		const params = [manager_id, employee_id];
 		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.affectedRows === 0 ? reject(red(`Unable to find either employee ${employeeName} or manager ${managerName}`)) : result.changedRows === 0 ? reject(white(`No changes were made`)) : resolve(green(`Updated ${employeeName}'s manager to ${managerName}`))));
 	});

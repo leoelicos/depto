@@ -41,7 +41,7 @@ const { sqlGetDepartments } = require('./printDepartments');
 const sqlAddRole = (roleTitle, roleSalary, departmentId) =>
 	new Promise(function (resolve, reject) {
 		const sql = `	INSERT INTO role (title, salary, department_id)
-								VALUES (?, ?, ?);`;
+				VALUES (?, ?, ?);`;
 		const params = [roleTitle, roleSalary, departmentId];
 		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.affectedRows === 0 ? reject(red(`Unable to add role ${roleTitle}`)) : resolve(green(`Added ${roleTitle} to the database`))));
 	});

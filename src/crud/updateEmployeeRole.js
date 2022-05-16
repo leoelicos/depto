@@ -38,8 +38,8 @@ const { sqlGetRoles } = require('./printRoles');
 const sqlUpdateEmployeeRole = (employee_id, role_id, employeeName, roleName) =>
 	new Promise(function (resolve, reject) {
 		const sql = ` 	UPDATE employee 
-							SET role_id = ? 
-							WHERE id = ?`;
+				SET role_id = ? 
+				WHERE id = ?`;
 		const params = [role_id, employee_id];
 		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.affectedRows === 0 ? reject(red(`Unable to find employee ${employee_id} or role ${role_id}`)) : result.changedRows === 0 ? resolve(white(`No changes were made`)) : resolve(green(`Updated ${employeeName}'s role to ${roleName}`))));
 	});

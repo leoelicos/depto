@@ -31,12 +31,12 @@ const { sqlGetDepartments } = require('./printDepartments');
 const sqlGetTotalUtilizedBudget = (dId, dName) =>
 	new Promise(function (resolve, reject) {
 		const sql = ` 	SELECT d.name AS 'department', SUM(salary) AS 'total utilized budget'            
-							FROM employee AS e
-							INNER JOIN role AS r
-								ON e.role_id = r.id
-							INNER JOIN department AS d
-								ON r.department_id = d.id
-							WHERE r.department_id = ?;`;
+				FROM employee AS e
+				INNER JOIN role AS r
+				ON e.role_id = r.id
+				INNER JOIN department AS d
+				ON r.department_id = d.id
+				WHERE r.department_id = ?;`;
 		const params = dId;
 		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result[0].department === null ? reject(red(`No budget found for department ${dName}`)) : resolve(result)));
 	});

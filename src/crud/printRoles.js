@@ -15,9 +15,9 @@ const { db } = require('../../config/connection');
 const sqlGetRoles = () =>
 	new Promise(function (resolve, reject) {
 		const sql = `	SELECT r.id, r.title, d.name AS department, r.salary
-								FROM role AS r
-								INNER JOIN department AS d
-									ON r.department_id = d.id;`;
+				FROM role AS r
+				INNER JOIN department AS d
+				ON r.department_id = d.id;`;
 		db.query(sql, (err, result) => (err ? reject(sqlErr(sql, err)) : result.length === 0 ? reject(red('No roles found')) : resolve(result)));
 	});
 

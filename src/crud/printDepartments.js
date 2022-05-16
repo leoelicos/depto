@@ -15,7 +15,7 @@ const { db } = require('../../config/connection');
 const sqlGetDepartments = () =>
 	new Promise(function (resolve, reject) {
 		const sql = `	SELECT id, name AS department 
-							 FROM department;`;
+				FROM department;`;
 		db.query(sql, (err, result) => (err ? reject(new Error(sqlErr(sql, err))) : result.length === 0 ? reject(red('No departments found')) : resolve(result)));
 	});
 

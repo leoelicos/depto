@@ -31,12 +31,12 @@ const { sqlGetDepartments } = require('./printDepartments');
 const sqlGetEmployeesByDepartment = (dId, dName) =>
 	new Promise(function (resolve, reject) {
 		const sql = `	SELECT e.id, e.first_name, e.last_name, title 
-								FROM employee AS e 
-								INNER JOIN role AS r 
-									ON e.role_id = r.id 
-								INNER JOIN department AS d
-									ON r.department_id = d.id
-								WHERE d.id = ?;`;
+				FROM employee AS e 
+				INNER JOIN role AS r 
+				ON e.role_id = r.id 
+				INNER JOIN department AS d
+				ON r.department_id = d.id
+				WHERE d.id = ?;`;
 		const params = dId;
 		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.length === 0 ? reject(red(`No employees found in department ${dName}`)) : resolve(result)));
 	});

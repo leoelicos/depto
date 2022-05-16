@@ -28,7 +28,7 @@ const { db } = require('../../config/connection');
 const sqlAddDepartment = (dName) =>
 	new Promise(function (resolve, reject) {
 		const sql = `	INSERT INTO department (name)
-								VALUES (?);`;
+				VALUES (?);`;
 		const params = dName;
 		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.affectedRows === 0 ? reject(red(`Unable to add department ${dName}`)) : resolve(green(`Added ${dName} to the database`))));
 	});

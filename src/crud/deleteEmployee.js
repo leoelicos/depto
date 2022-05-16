@@ -31,7 +31,7 @@ const { sqlGetEmployees } = require('./printEmployees');
 const sqlDeleteEmployee = (employee_id, employeeName) =>
 	new Promise(function (resolve, reject) {
 		const sql = `	DELETE FROM employee 
-							 	WHERE id = ?`;
+				WHERE id = ?`;
 		const params = employee_id;
 		db.query(sql, params, (err, result) => (err ? reject(sqlParamsErr(sql, params, err)) : result.affectedRows === 0 ? reject(red(`Unable to find employee ${employeeName}`)) : resolve(green(`Deleted ${employeeName} from employees`))));
 	});
