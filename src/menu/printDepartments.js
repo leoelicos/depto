@@ -5,14 +5,25 @@
  * Copyright 2022 Leo Wong
  */
 
+// utility function to create good-looking console logs
+const { red, sqlErr } = require('../utils/chalkRender');
+
+// import connection
+const { db } = require('../../config/connection');
+
 // sql to query database
-const { sqlGetDepartments } = require('../mysql2');
+const sqlGetDepartments = () =>
+	new Promise(function (resolve, reject) {
+		const sql = `	SELECT id, name AS department 
+							 FROM department;`;
+		db.query(sql, (err, result) => (err ? reject(new Error(sqlErr(sql, err))) : result.length === 0 ? reject(red('No departments found')) : resolve(result)));
+	});
 
 /*
  * Function to print all departments from the database
  * mysql 	> get the list of departments from the database
  */
-printDepartments = async () => {
+const printDepartments = async () => {
 	try {
 		//* mysql 	> get the list of departments from the database
 		const dObjects = await sqlGetDepartments();
@@ -28,4 +39,4 @@ printDepartments = async () => {
 		console.error(err);
 	}
 };
-module.exports = { printDepartments };
+module.exports = { printDepartments, sqlGetDepartments };
