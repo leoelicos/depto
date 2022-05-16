@@ -30,17 +30,24 @@ Source code: [Employee Management System on GitHub](https://github.com/leoelicos
 | Import dependencies           | `npm i`                                                                        |
 | Start the app                 | `npm start`                                                                    |
 
-## Usage
+## Demo
 
--  Video demo
+### Video demo
 
 https://user-images.githubusercontent.com/99461390/168465029-867e7224-30ab-4c93-b211-7c3a8250b9cd.mp4
 
--  Video demo is also on YouTube: (https://www.youtube.com/watch?v=W58SFkcsXkM)
+Also on [YouTube](https://www.youtube.com/watch?v=W58SFkcsXkM)
 
-### Navigate menu items with <kbd>Up ↑</kbd> and <kbd>Down ↓</kbd>
+## Usage
 
-### Select menu items with <kbd>Enter ↵</kbd>
+### Keyboard commands
+
+| Step                | Keyboard commands                     |
+| ------------------- | ------------------------------------- |
+| Navigate menu items | <kbd>Up ↑</kbd> and <kbd>Down ↓</kbd> |
+| Select menu items   | <kbd>Enter ↵</kbd>                    |
+
+### GUI
 
 | Menu                                     | What it does                                      |
 | ---------------------------------------- | ------------------------------------------------- |
