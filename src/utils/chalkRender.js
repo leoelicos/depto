@@ -23,4 +23,10 @@ const green = (text) => pad + quinary(text);
 const SIZE_OF_SCREEN = 120;
 const logoHelper = (message, padChar) => console.log(' ' + tertiary(message.padEnd(SIZE_OF_SCREEN, padChar)));
 
-module.exports = { primary, secondary, tertiary, quaternary, logoHelper, quinary, red, white, green };
+// static helper functions to log errors with sql
+const sqlErr = (sql, err) => red(`Check your SQL: ${sql}\n${err}\n`);
+
+// static helper functions to log errors with sql and params
+const sqlParamsErr = (sql, params, err) => red(`Check your SQL: ${sql}\n${JSON.stringify(params)}\n${err}\n`);
+
+module.exports = { primary, secondary, tertiary, quaternary, logoHelper, quinary, red, white, green, sqlErr, sqlParamsErr };
