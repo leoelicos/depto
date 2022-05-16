@@ -28,15 +28,15 @@ const inquireMenu = () =>
 
 //* import create scripts
 const { addDepartment } = require('./src/crud/addDepartment.js');
-const { addEmployee } = require('./src/crud/addEmployee.js.js');
-const { addRole } = require('./src/crud/addRole.js.js');
+const { addEmployee } = require('./src/crud/addEmployee.js');
+const { addRole } = require('./src/crud/addRole.js');
 
 //* import read scripts
-const { printDepartments } = require('./src/crud/printDepartments.js.js');
+const { printDepartments } = require('./src/crud/printDepartments.js');
 const { printEmployees } = require('./src/crud/printEmployees.js');
-const { printEmployeesByDepartment } = require('./src/crud/printEmployeesByDepartment.js.js');
-const { printEmployeesByManager } = require('./src/crud/printEmployeesByManager.js.js');
-const { printRoles } = require('./src/crud/printRoles.js.js');
+const { printEmployeesByDepartment } = require('./src/crud/printEmployeesByDepartment.js');
+const { printEmployeesByManager } = require('./src/crud/printEmployeesByManager.js');
+const { printRoles } = require('./src/crud/printRoles.js');
 const { printUtilizedBudgetByDepartment } = require('./src/crud/printUtilizedBudgetByDepartment.js');
 
 //* import update scripts
