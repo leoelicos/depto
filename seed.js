@@ -12,7 +12,7 @@ const offline = {
 }
 
 const db = mysql.createConnection(online || offline)
-
+db.connect()
 const seed = async () => {
   try {
     const p = new Promise((resolve, reject) => {
@@ -94,4 +94,4 @@ VALUES ("John",   "Doe",      1, null),
   }
 }
 
-seed()
+await seed()
