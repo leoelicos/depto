@@ -2,6 +2,9 @@
   "name": "employee-management-system",
   "type": "module",
   "version": "1.0.0",
+  "engines": {
+    "node": "18.x"
+  },
   "description": "Employee CMS",
   "main": "index.js",
   "scripts": {
