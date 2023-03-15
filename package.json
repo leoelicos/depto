@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "seed": "node seed.js",
+    "heroku-postbuild": "npm run seed"
   },
   "author": "Leo Wong",
   "license": "MIT",
