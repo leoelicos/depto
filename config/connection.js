@@ -1,22 +1,16 @@
-/*
- * Employee Management System
- * connection.js
- * This script connects to the local mysql database
- * Copyright 2022 Leo Wong
- */
+import mysql from 'mysql2'
+import * as dotenv from 'dotenv'
+dotenv.config()
 
-// mysql2 is an npm library package which allows javascript access to an SQL database
-const db = require('mysql2').createConnection(
-	// database location
-	{
-		host: 'localhost',
-		user: 'root',
-		password: 'xxxx',
-		database: 'ems',
-	}
-);
+const online = process.env.JAWSDB_URL
+const offline = {
+  port: 3306,
+  // host: 'localhost',
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE
+}
 
-const disconnect = async () => db.end();
+const db = mysql.createConnection(online || offline)
 
-// export connection
-module.exports = { db, disconnect };
+export default db
