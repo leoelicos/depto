@@ -1,6 +1,23 @@
-import db from '../config/connection'
+import mysql from 'mysql2'
+import * as dotenv from 'dotenv'
+dotenv.config()
+
+const online = process.env.JAWSDB_URL
+const offline = {
+  port: 3306,
+  // host: 'localhost',
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE
+}
+
+console.log({ online, offline })
+console.log(process.env)
+
+const db = mysql.createConnection(online || offline)
 
 const seed = async () => {
+  console.log('here')
   try {
     const p = new Promise((resolve, reject) => {
       db.query(
