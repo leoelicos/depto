@@ -11,13 +11,9 @@ const offline = {
   database: process.env.DATABASE
 }
 
-console.log({ online, offline })
-console.log(process.env)
-
 const db = mysql.createConnection(online || offline)
 
 const seed = async () => {
-  console.log('here')
   try {
     const p = new Promise((resolve, reject) => {
       db.query(
