@@ -1,10 +1,10 @@
 import * as dotenv from 'dotenv'
-dotenv.config()
-
+import db from './config/connection.js'
 import express from 'express'
 import cors from 'cors'
 
 import routes from './routes/index.js'
+dotenv.config()
 
 const app = express()
 
