@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "heroku-postbuild": "node db/seed.js"
+    "heroku-postbuild": "node seed.js"
   },
   "author": "Leo Wong",
   "license": "MIT",
