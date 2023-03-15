@@ -1,30 +1,26 @@
 {
-	"dependencies": {
-		"chalk": "^4.1.2",
-		"inquirer": "^8.2.4",
-		"mysql2": "^2.3.3"
-	},
-	"name": "employee-management-system",
-	"version": "1.0.0",
-	"description": "Employee CMS using Inquirer, SQL and Express",
-	"main": "index.js",
-	"scripts": {
-		"start": "node index.js",
-		"test": "npm test"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/leoelicos/bcs-12-employee-management-system.git"
-	},
-	"keywords": [
-		"inquirer",
-		"sql"
-	],
-	"author": "Leo Wong",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/leoelicos/bcs-12-employee-management-system/issues"
-	},
-	"homepage": "https://github.com/leoelicos/bcs-12-employee-management-system#readme",
-	"exports": "./typings/mysql/lib/Connection"
+  "name": "employee-management-system",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Employee CMS",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "Leo Wong",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mysql2": "^3.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leoelicos/bcs-12-employee-management-system.git"
+  },
+  "keywords": [
+    "sql"
+  ]
 }
