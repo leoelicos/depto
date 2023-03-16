@@ -17,8 +17,8 @@ app.use((req, res, next) => {
   next()
 })
 app.use(routes)
-const PORT = process.env.port || 3001
+const port = process.env.PORT || 3001
 
-app.listen(PORT, () => {
+app.listen(port, () => {
   console.log(`API server  running on port ${PORT}!`)
 })
