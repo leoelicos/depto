@@ -11,5 +11,4 @@ const offline = {
   password: process.env.PASSWORD,
   database: process.env.DATABASE
 }
-console.log({ online, offline })
 export default mysql.createConnection(online || offline)
