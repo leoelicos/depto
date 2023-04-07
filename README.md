@@ -12,6 +12,8 @@ I made this app in order to learn how to use SQL queries.
 
 I used GitHub Projects and various Pull Requests to create this app: https://github.com/leoelicos/depto/projects/1
 
+Deployed API https://dpto.herokuapp.com/
+
 ## Installation
 
 Source code: [depto on GitHub](https://github.com/leoelicos/depto).
