@@ -1,4 +1,4 @@
-# Employee Management System
+# depto
 
 ![MySQL](https://img.shields.io/badge/2.3.3-0?label=MySQL&style=for-the-badge&labelColor=white&color=black) ![Inquirer](https://img.shields.io/badge/8.2.4-0?label=Inquirer&style=for-the-badge&labelColor=white&color=black) ![chalk](https://img.shields.io/badge/4.1.2-0?label=chalk&style=for-the-badge&labelColor=white&color=black)
 
@@ -10,25 +10,25 @@ This CLI application uses npm packages `inquirer`, `SQL` and `chalk`.
 
 I made this app in order to learn how to use SQL queries.
 
-I used GitHub Projects and various Pull Requests to create this app: https://github.com/leoelicos/bcs-12-employee-management-system/projects/1
+I used GitHub Projects and various Pull Requests to create this app: https://github.com/leoelicos/depto/projects/1
 
 ## Installation
 
-Source code: [Employee Management System on GitHub](https://github.com/leoelicos/bcs-12-employee-management-system).
+Source code: [depto on GitHub](https://github.com/leoelicos/depto).
 
-| Step                          | Instruction                                                                    |
-| ----------------------------- | ------------------------------------------------------------------------------ |
-| install node                  | https://nodejs.org/en/download/                                                |
-| install mysql                 | https://dev.mysql.com/downloads/installer/                                     |
-| clone this repo               | `git clone https://github.com/leoelicos/bcs-12-employee-management-system.git` |
-| Go inside the database folder | `cd db`                                                                        |
-| invoke mysql                  | `mysql -u root -p`                                                             |
-| Enter your mysql password     | `{password}`                                                                   |
-| Create schema                 | `source schema.sql`                                                            |
-| (optional) Add dummy data     | `source seeds.sql`                                                             |
-| Exit mysql                    | `exit`                                                                         |
-| Import dependencies           | `npm i`                                                                        |
-| Start the app                 | `npm start`                                                                    |
+| Step                          | Instruction                                        |
+| ----------------------------- | -------------------------------------------------- |
+| install node                  | https://nodejs.org/en/download/                    |
+| install mysql                 | https://dev.mysql.com/downloads/installer/         |
+| clone this repo               | `git clone https://github.com/leoelicos/depto.git` |
+| Go inside the database folder | `cd db`                                            |
+| invoke mysql                  | `mysql -u root -p`                                 |
+| Enter your mysql password     | `{password}`                                       |
+| Create schema                 | `source schema.sql`                                |
+| (optional) Add dummy data     | `source seeds.sql`                                 |
+| Exit mysql                    | `exit`                                             |
+| Import dependencies           | `npm i`                                            |
+| Start the app                 | `npm start`                                        |
 
 ## Demo
 
@@ -103,7 +103,7 @@ Also on [YouTube](https://www.youtube.com/watch?v=W58SFkcsXkM)
 
 ## Credits
 
--  BCS Resources
+- BCS Resources
 
 ## License
 

@@ -1,5 +1,5 @@
 {
-  "name": "employee-management-system",
+  "name": "depto",
   "type": "module",
   "version": "1.0.0",
   "engines": {
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/leoelicos/bcs-12-employee-management-system.git"
+    "url": "git+https://github.com/leoelicos/depto.git"
   },
   "keywords": [
     "sql"
